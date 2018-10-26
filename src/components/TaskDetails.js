@@ -6,7 +6,7 @@ import TaskOverview from './TaskOverview';
 import TextArea from './TextArea';
 import TaskInput from './TaskInput';
 import BackButton from './BackButton';
-import db from '../firebase/firebase';
+import { getTask } from '../services/tasks';
 
 const Content = styled.div`
   margin-left: 1.5rem;
@@ -34,8 +34,7 @@ class TaskDetails extends React.Component {
   }
 
   componentDidMount() {
-    db.collection('tasks').doc(`/${this.state.task.id}`).get()
-      .then(task => this.setState({ task: task.data() }))
+    getTask(this.props.match.params.id).then(task => this.setState({ task }))
   };
 
   openSubtask = (taskId, subtaskId) => {
