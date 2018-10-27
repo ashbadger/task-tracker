@@ -15,4 +15,25 @@ const getSubtask = (taskId, subtaskId) => {
 		.then(task => task.data().subtasks.find(subtask => subtask.id == subtaskId));
 };
 
-export { getTasks, getTask, getSubtask };
+const createTask = (task) => {
+	return db.collection('tasks').add(task)
+		.then(task => task.data());
+};
+
+const updateTask = (id, updates) => {
+	return db.collection('tasks').doc(`/${id}`).update(updates)
+		.then(task => task.data());
+};
+
+const updateSubtasks = (task) => {
+	const { id } = task;
+	return db.collection('tasks').doc(`/${id}`).set(task)
+		.then(task => task.data());	
+};
+
+const deleteTask = (id) => {
+	return db.collection('tasks').doc(`/${id}`).delete()
+		.then(task => task.data());
+};
+
+export { getTasks, getTask, getSubtask, createTask, updateTask, updateSubtasks, deleteTask };
