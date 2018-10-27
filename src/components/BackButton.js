@@ -30,8 +30,8 @@ class BackButton extends React.Component {
       <Button>
         <FiArrowLeftCircle fill={'transparent'} size={'2rem'} color={'rgb(173, 173, 173)'} strokeWidth={1.5} className="button" onClick={this.navigateBack}/>
       </Button> 
-    )
-  }
-}
+    );
+  };
+};
 
 export default BackButton;

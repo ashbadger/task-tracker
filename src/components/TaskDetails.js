@@ -34,7 +34,7 @@ class TaskDetails extends React.Component {
   }
 
   componentDidMount() {
-    getTask(this.props.match.params.id).then(task => this.setState({ task }))
+    getTask(this.props.match.params.id).then(task => this.setState({ task }));
   };
 
   openSubtask = (taskId, subtaskId) => {
@@ -62,7 +62,7 @@ class TaskDetails extends React.Component {
         </Content>
       </div>
     );
-  }
+  };
 }
 
 export default TaskDetails;

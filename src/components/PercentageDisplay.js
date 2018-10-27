@@ -17,7 +17,7 @@ const ProgressBar = styled.div`
   @keyframes bar-animation {
     0% { width: 0 }
     100% { width: ${props => props.width}% }
-  }
+  };
 
   border-radius: 5px;
   height: inherit;
@@ -39,14 +39,14 @@ const ProgressText = styled.small`
 class PercentageDisplay extends React.Component {
   constructor(props) {
     super(props);
-  }
+  };
 
-  getAggregatePercentage(){
+  getAggregatePercentage() {
     const subtasks = this.props.tasks;
     return (subtasks.filter(t => t.complete).length / subtasks.length).toFixed(2) * 100 || 0;
-  }
+  };
 
-  render(){
+  render() {
     const percentage = this.getAggregatePercentage();
 
     return (
@@ -55,7 +55,7 @@ class PercentageDisplay extends React.Component {
         <ProgressBar width={percentage}></ProgressBar>
       </Container>
     );
-  }
-}
+  };
+};
 
 export default PercentageDisplay;

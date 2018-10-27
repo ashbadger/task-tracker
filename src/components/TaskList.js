@@ -13,7 +13,7 @@ class TaskList extends React.Component {
   constructor(props) {
     super(props);
     this.state = { tasks: [] };
-  }
+  };
 
   componentDidMount() {
       getTasks().then(tasks => this.setState({ tasks }));
@@ -33,7 +33,7 @@ class TaskList extends React.Component {
           )}
         </Tasks>
     );
-  }
-}
+  };
+};
 
 export default TaskList;

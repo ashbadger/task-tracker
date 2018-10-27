@@ -21,9 +21,9 @@ const Text = styled.textarea`
 class TextArea extends React.Component {
   constructor(props) {
     super(props);
-  }
+  };
 
-  render () {
+  render() {
     return (
       <Text></Text>
     );

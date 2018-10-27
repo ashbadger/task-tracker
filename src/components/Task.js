@@ -43,11 +43,11 @@ const Complete = styled.div`
 `;
 
 class Task extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
-  }
+  };
 
-  getAggregatePercentage(){
+  getAggregatePercentage() {
     const subtasks = this.props.subtasks;
     return (subtasks.filter(t => t.complete).length / subtasks.length).toFixed(2) * 100 || 0;
   }
@@ -77,8 +77,8 @@ class Task extends React.Component {
           }
         </Complete>
       </Container>
-    )
-  }
-}
+    );
+  };
+};
 
 export default Task;

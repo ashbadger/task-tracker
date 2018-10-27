@@ -12,27 +12,27 @@ const TimerBox = styled.p`
 `;
 
 class Timer extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       time: 0,
       started: false
     };
-  }
+  };
 
   incrementTime = () => {
     this.interval = setInterval(() => {
       this.setState((state) => ({ time: state.time + 1000, started: true }))
-    }, 1000)
-  }
+    }, 1000);
+  };
   
 
   stopTime = () => {
     clearInterval(this.interval);
     this.setState(() => ({ started: false }))
-  }
+  };
 
-  render(){
+  render() {
     return (
       <div>
         <TimerBox started={this.state.started}>{prettyMS(this.state.time)}</TimerBox>
@@ -43,7 +43,7 @@ class Timer extends React.Component {
         }
       </div>
     );
-  }
-}
+  };
+};
 
 export default Timer;

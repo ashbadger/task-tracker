@@ -18,16 +18,16 @@ const Container = styled.div`
 `;
 
 class TaskOverview extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
-  }
+  };
 
   totalTimeSpent() {
     return this.props.subtasks.map((t) => t.timeSpent)
       .reduce((a, b) => a + b, 0) || 0;
-  }
+  };
 
-  render(){
+  render() {
     return (
       <Container>
         <div>
@@ -40,7 +40,7 @@ class TaskOverview extends React.Component {
         </div>
       </Container>
     );
-  }
-}
+  };
+};
 
 export default TaskOverview;

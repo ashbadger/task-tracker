@@ -15,7 +15,7 @@ const AppRouter = () => {
         <Route path="/tasks/:id/:subtaskId" component={SubtaskDetails} />
       </div>
     </Router>
-  )
-}
+  );
+};
 
 export default AppRouter;

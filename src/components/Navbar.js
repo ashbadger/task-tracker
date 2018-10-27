@@ -20,8 +20,8 @@ class Navbar extends React.Component {
       <Navigation>
         <Image src={logo}></Image>
       </Navigation>
-    )
-  }
-}
+    );
+  };
+};
 
 export default Navbar;
