@@ -4,7 +4,7 @@ const webpack = require('webpack');
 module.exports = {
   entry: './src/app.js',
   output: {
-    path: path.resolve(__dirname, 'public', 'dist'),
+    path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
   },
   module: {
@@ -27,8 +27,7 @@ module.exports = {
     ],
   },
   devServer: {
-    contentBase: path.join(__dirname, 'public'),
-    publicPath: '/dist/',
+    contentBase: path.join(__dirname, 'dist'),
     historyApiFallback: true,
   },
   devtool: 'cheap-module-source-map',
