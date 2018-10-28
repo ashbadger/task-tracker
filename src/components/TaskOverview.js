@@ -18,6 +18,10 @@ const Container = styled.div`
   flex-wrap: wrap;
 `;
 
+const propTypes = {
+  subtasks: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
 class TaskOverview extends React.Component {
   totalTimeSpent() {
     const { subtasks } = this.props;
@@ -41,8 +45,6 @@ class TaskOverview extends React.Component {
   }
 }
 
-TaskOverview.propTypes = {
-  subtasks: PropTypes.arrayOf(PropTypes.object).isRequired,
-};
+TaskOverview.propTypes = propTypes;
 
 export default TaskOverview;

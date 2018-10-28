@@ -46,6 +46,11 @@ const SectionHeader = styled.h4`
   color: rgba(91, 91, 91, 1);
 `;
 
+const propTypes = {
+  history: PropTypes.shape({}).isRequired,
+  match: PropTypes.shape({}).isRequired,
+};
+
 class SubtaskDetails extends React.Component {
   constructor(props) {
     super(props);
@@ -97,9 +102,6 @@ class SubtaskDetails extends React.Component {
   }
 }
 
-SubtaskDetails.propTypes = {
-  history: PropTypes.shape({}).isRequired,
-  match: PropTypes.shape({}).isRequired,
-};
+SubtaskDetails.propTypes = propTypes;
 
 export default SubtaskDetails;

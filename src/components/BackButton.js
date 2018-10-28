@@ -17,6 +17,10 @@ const Button = styled.div`
   }
 `;
 
+const propTypes = {
+  history: PropTypes.shape({}).isRequired,
+};
+
 class BackButton extends React.Component {
   navigateBack = () => {
     const { history } = this.props;
@@ -32,8 +36,6 @@ class BackButton extends React.Component {
   }
 }
 
-BackButton.propTypes = {
-  history: PropTypes.shape({}).isRequired,
-};
+BackButton.propTypes = propTypes;
 
 export default BackButton;

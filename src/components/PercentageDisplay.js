@@ -37,6 +37,10 @@ const ProgressText = styled.small`
   color: black;
 `;
 
+const propTypes = {
+  tasks: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
 class PercentageDisplay extends React.Component {
   getAggregatePercentage() {
     const { tasks: subtasks } = this.props;
@@ -58,8 +62,6 @@ class PercentageDisplay extends React.Component {
   }
 }
 
-PercentageDisplay.propTypes = {
-  tasks: PropTypes.arrayOf(PropTypes.object).isRequired,
-};
+PercentageDisplay.propTypes = propTypes;
 
 export default PercentageDisplay;
