@@ -21,55 +21,59 @@ const SectionHeader = styled.h4`
 `;
 
 class TaskDetails extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.state = { 
+    const { match: { params: { id } } } = this.props;
+    this.state = {
       task: {
-        id: this.props.match.params.id,
+        id,
         name: '',
         subtasks: [{}],
         notes: '',
-      }
+      },
     };
   }
 
   componentDidMount() {
-    getTask(this.props.match.params.id).then(task => this.setState({ task }));
-  };
+    const { match: { params: { id } } } = this.props;
+    getTask(id).then(task => this.setState({ task }));
+  }
 
   openSubtask = (taskId, subtaskId) => {
-    return this.props.history.push(`/tasks/${taskId}/${subtaskId}`);
-  };
+    const { history } = this.props;
+    history.push(`/tasks/${taskId}/${subtaskId}`);
+  }
 
   render() {
+    const { history } = this.props;
+    const { task: { name, subtasks, id } } = this.state;
     return (
       <div>
-        <BackButton history={this.props.history}/>
+        <BackButton history={history} />
         <Content>
           <SectionHeader>name</SectionHeader>
-          <TaskInput value={this.state.task.name} onChange={() => null}></TaskInput>
+          <TaskInput value={name} onChange={() => null} />
           <SectionHeader>overview</SectionHeader>
-          <TaskOverview subtasks={this.state.task.subtasks} />
+          <TaskOverview subtasks={subtasks} />
           <SectionHeader>subtasks</SectionHeader>
-          { this.state.task.subtasks.map((subtask) => 
-              <div onClick={() => this.openSubtask(this.state.task.id, subtask.id)}>
-                <Task { ...subtask } key={subtask.id} />
-              </div>
-            )
-          }
+          {subtasks.map(subtask => (
+            <div onClick={() => this.openSubtask(id, subtask.id)}>
+              <Task {...subtask} key={subtask.id} />
+            </div>
+          ))}
           <SectionHeader>notes</SectionHeader>
-          <TextArea></TextArea>
+          <TextArea />
         </Content>
       </div>
     );
-  };
+  }
 }
 
 export default TaskDetails;
 
-  /* pointer-events: none; */
-  /* opacity: 0.5; */
-  // z-index: 1;
+/* pointer-events: none; */
+/* opacity: 0.5; */
+// z-index: 1;
 
 
 // const transformations = {

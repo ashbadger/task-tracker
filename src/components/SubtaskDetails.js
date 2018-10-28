@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 import TaskInput from './TaskInput';
 import TextArea from './TextArea';
@@ -46,51 +47,59 @@ const SectionHeader = styled.h4`
 `;
 
 class SubtaskDetails extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.state = { 
+    this.state = {
       subtask: {
         id: 0,
         name: '',
         notes: '',
-        timeSpent: 0
-      }
+        timeSpent: 0,
+      },
     };
-  };
+  }
 
   componentDidMount() {
-    getSubtask(this.props.match.params.id, this.props.match.params.subtaskId)
-      .then(subtask => this.setState({ subtask }) );
-  };
+    const { match: { params: { id: taskId, subtaskId } } } = this.props;
+    getSubtask(taskId, subtaskId)
+      .then(subtask => this.setState({ subtask }));
+  }
 
   render() {
+    const { subtask: { timeSpent, name } } = this.state;
+    const { history } = this.props;
     return (
       <div>
-        <BackButton history={this.props.history}/>
+        <BackButton history={history} />
         <Content>
           <SectionHeader>name</SectionHeader>
-          <TaskInput value={this.state.subtask.name} onChange={() => null}></TaskInput>
+          <TaskInput value={name} onChange={() => null} />
           <SectionHeader>actions</SectionHeader>
           <ActionsContainer>
             <ItemContainer>
               <small>Time Spent</small>
-              <Timer time={this.state.subtask.timeSpent}/>
+              <Timer time={timeSpent} />
             </ItemContainer>
             <ItemContainer>
               <small>Complete Subtask</small>
-              <Button color='green'>Complete</Button>
+              <Button color="green">Complete</Button>
             </ItemContainer>
             <ItemContainer>
               <small>Delete Subtask</small>
-              <Button color='red'>delete</Button>
+              <Button color="red">delete</Button>
             </ItemContainer>
           </ActionsContainer>
           <SectionHeader>notes</SectionHeader>
-          <TextArea></TextArea>
-        </Content> 
+          <TextArea />
+        </Content>
       </div>
     );
   }
 }
+
+SubtaskDetails.propTypes = {
+  history: PropTypes.shape({}).isRequired,
+  match: PropTypes.shape({}).isRequired,
+};
 
 export default SubtaskDetails;

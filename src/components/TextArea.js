@@ -18,16 +18,6 @@ const Text = styled.textarea`
   }
 `;
 
-class TextArea extends React.Component {
-  constructor(props) {
-    super(props);
-  };
-
-  render() {
-    return (
-      <Text></Text>
-    );
-  }
-}
+const TextArea = () => (<Text />);
 
 export default TextArea;

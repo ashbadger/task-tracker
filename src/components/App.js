@@ -16,15 +16,13 @@ injectGlobal`
   }
 `;
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <div>
-        <Navbar />
-        <Card>
-          <AppRouter />
-        </Card>
-      </div>
-    );
-  };
-};
+const App = () => (
+  <div>
+    <Navbar />
+    <Card>
+      <AppRouter />
+    </Card>
+  </div>
+);
+
+export default App;

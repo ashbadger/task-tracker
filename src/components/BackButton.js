@@ -1,6 +1,7 @@
 import React from 'react';
 import { FiArrowLeftCircle } from 'react-icons/fi';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const Button = styled.div`
   position: absolute;
@@ -17,21 +18,22 @@ const Button = styled.div`
 `;
 
 class BackButton extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   navigateBack = () => {
-    this.props.history.goBack();
+    const { history } = this.props;
+    history.goBack();
   }
 
   render() {
     return (
       <Button>
-        <FiArrowLeftCircle fill={'transparent'} size={'2rem'} color={'rgb(173, 173, 173)'} strokeWidth={1.5} className="button" onClick={this.navigateBack}/>
-      </Button> 
+        <FiArrowLeftCircle fill="transparent" size="2rem" color="rgb(173, 173, 173)" strokeWidth={1.5} className="button" onClick={this.navigateBack} />
+      </Button>
     );
-  };
+  }
+}
+
+BackButton.propTypes = {
+  history: PropTypes.shape({}).isRequired,
 };
 
 export default BackButton;

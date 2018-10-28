@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const Container = styled.div`
   background: rgba(210, 210, 210, 1);
@@ -37,25 +38,28 @@ const ProgressText = styled.small`
 `;
 
 class PercentageDisplay extends React.Component {
-  constructor(props) {
-    super(props);
-  };
-
   getAggregatePercentage() {
-    const subtasks = this.props.tasks;
-    return (subtasks.filter(t => t.complete).length / subtasks.length).toFixed(2) * 100 || 0;
-  };
+    const { tasks: subtasks } = this.props;
+    return ((subtasks.filter(t => t.complete).length / subtasks.length).toFixed(2) * 100) || 0;
+  }
 
   render() {
     const percentage = this.getAggregatePercentage();
 
     return (
       <Container>
-        <ProgressText>{percentage}%</ProgressText>
-        <ProgressBar width={percentage}></ProgressBar>
+        <ProgressText>
+          {percentage}
+          %
+        </ProgressText>
+        <ProgressBar width={percentage} />
       </Container>
     );
-  };
+  }
+}
+
+PercentageDisplay.propTypes = {
+  tasks: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default PercentageDisplay;

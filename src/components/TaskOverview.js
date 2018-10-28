@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import prettyMS from 'pretty-ms';
+import PropTypes from 'prop-types';
 
 import PercentageDisplay from './PercentageDisplay';
 
@@ -18,16 +19,13 @@ const Container = styled.div`
 `;
 
 class TaskOverview extends React.Component {
-  constructor(props) {
-    super(props);
-  };
-
   totalTimeSpent() {
-    return this.props.subtasks.map((t) => t.timeSpent)
-      .reduce((a, b) => a + b, 0) || 0;
-  };
+    const { subtasks } = this.props;
+    return subtasks.map(t => t.timeSpent).reduce((a, b) => a + b, 0) || 0;
+  }
 
   render() {
+    const { subtasks } = this.props;
     return (
       <Container>
         <div>
@@ -36,11 +34,15 @@ class TaskOverview extends React.Component {
         </div>
         <div>
           <small>Total Percentage Complete</small>
-          <PercentageDisplay tasks={this.props.subtasks}/>
+          <PercentageDisplay tasks={subtasks} />
         </div>
       </Container>
     );
-  };
+  }
+}
+
+TaskOverview.propTypes = {
+  subtasks: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default TaskOverview;

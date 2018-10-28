@@ -12,20 +12,16 @@ const Navigation = styled.div`
 
 const Logo = styled.a`
   &, img {
-		height: inherit;
-	}
+    height: inherit;
+  }
 `;
 
-class Navbar extends React.Component {
-  render() {
-    return (
-			<Navigation>
-				<Logo href="/tasks">
-        	<img src={logo} />
-				</Logo>
-      </Navigation>
-    );
-  };
-};
+const Navbar = () => (
+  <Navigation>
+    <Logo href="/tasks">
+      <img src={logo} alt="logo" />
+    </Logo>
+  </Navigation>
+);
 
 export default Navbar;

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import prettyMS from 'pretty-ms';
+import PropTypes from 'prop-types';
 
 const Container = styled.div`
   height: 4rem;
@@ -42,43 +43,65 @@ const Complete = styled.div`
   grid-area: complete;
 `;
 
-class Task extends React.Component {
-  constructor(props) {
-    super(props);
-  };
+const propTypes = {
+  subtasks: PropTypes.arrayOf(PropTypes.object),
+  name: PropTypes.string,
+  timeSpent: PropTypes.number,
+  complete: PropTypes.bool,
+};
 
+const defaultProps = {
+  subtasks: [],
+  name: '',
+  timeSpent: 0,
+  complete: false,
+};
+
+class Task extends React.Component {
   getAggregatePercentage() {
-    const subtasks = this.props.subtasks;
+    const { subtasks } = this.props;
     return (subtasks.filter(t => t.complete).length / subtasks.length).toFixed(2) * 100 || 0;
   }
 
   render() {
+    const {
+      name, timeSpent, subtasks, complete,
+    } = this.props;
+
     return (
       <Container>
         <Name>
           <small className="heading">Name</small>
-          <p>{this.props.name}</p>
+          <p>{name}</p>
         </Name>
         <TimeSpent>
           <small className="heading">Time Spent </small>
-          <small>{prettyMS((this.props.timeSpent || 0))}</small>
+          <small>{prettyMS((timeSpent || 0))}</small>
         </TimeSpent>
         <Complete>
           {
-            this.props.subtasks ?
-            <div>
-              <small className="heading">Percentage</small>
-              <small>{this.getAggregatePercentage()}%</small>
-            </div> :
-            <div>
-              <small className="heading">Completed</small>
-              <small>{this.props.complete ? 'Yes' : 'No'}</small>
-            </div>
+            subtasks ? (
+              <div>
+                <small className="heading">Percentage</small>
+                <small>
+                  {this.getAggregatePercentage()}
+                  %
+                </small>
+              </div>
+            ) : (
+              <div>
+                <small className="heading">Completed</small>
+                <small>{complete ? 'Yes' : 'No'}</small>
+              </div>
+            )
           }
         </Complete>
       </Container>
     );
-  };
-};
+  }
+}
+
+Task.propTypes = propTypes;
+Task.defaultProps = defaultProps;
 
 export default Task;
