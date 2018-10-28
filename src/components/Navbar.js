@@ -10,15 +10,19 @@ const Navigation = styled.div`
   border-bottom: 3px solid rgba(124, 124, 124, 1);
 `;
 
-const Image = styled.img`
-  height: inherit;
+const Logo = styled.a`
+  &, img {
+		height: inherit;
+	}
 `;
 
 class Navbar extends React.Component {
   render() {
     return (
-      <Navigation>
-        <Image src={logo}></Image>
+			<Navigation>
+				<Logo href="/tasks">
+        	<img src={logo} />
+				</Logo>
       </Navigation>
     );
   };
