@@ -27,7 +27,8 @@ module.exports = {
     ],
   },
   devServer: {
-    contentBase: path.join(__dirname, 'dist'),
+    contentBase: path.join(__dirname, 'public'),
+    publicPath: '/dist/',
     historyApiFallback: true,
   },
   devtool: 'cheap-module-source-map',
