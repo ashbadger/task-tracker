@@ -4,10 +4,10 @@ import styled from 'styled-components';
 import logo from '../assets/images/logo.png';
 
 const Navigation = styled.div`
-  background: rgba(246, 246, 246, 1);
+  background: rgba(223, 223, 223, 1);
+  border-bottom: 3px solid rgba(124, 124, 124, 1);
   height: 50px;
   padding: .5rem;
-  border-bottom: 3px solid rgba(124, 124, 124, 1);
 `;
 
 const Logo = styled.a`

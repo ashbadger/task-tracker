@@ -5,19 +5,18 @@ import Task from './Task';
 import TaskOverview from './TaskOverview';
 import TextArea from './TextArea';
 import TaskInput from './TaskInput';
-import BackButton from './BackButton';
 import { getTask } from '../services/tasks';
 
 const Content = styled.div`
-  margin-left: 1.5rem;
-  padding: 0 1rem;
-  overflow: hidden auto;
   height: -webkit-fill-available;
+  margin-left: 1.5rem;
+  overflow: hidden auto;
+  padding: 0 1rem;
 `;
 
 const SectionHeader = styled.h4`
-  font-weight: 500;
   color: rgba(91, 91, 91, 1);
+  font-weight: 500;
 `;
 
 class TaskDetails extends React.Component {
@@ -45,47 +44,24 @@ class TaskDetails extends React.Component {
   }
 
   render() {
-    const { history } = this.props;
     const { task: { name, subtasks, id } } = this.state;
     return (
-      <div>
-        <BackButton history={history} />
-        <Content>
-          <SectionHeader>name</SectionHeader>
-          <TaskInput value={name} onChange={() => null} />
-          <SectionHeader>overview</SectionHeader>
-          <TaskOverview subtasks={subtasks} />
-          <SectionHeader>subtasks</SectionHeader>
-          {subtasks.map(subtask => (
-            <div onClick={() => this.openSubtask(id, subtask.id)}>
-              <Task {...subtask} key={subtask.id} />
-            </div>
-          ))}
-          <SectionHeader>notes</SectionHeader>
-          <TextArea />
-        </Content>
-      </div>
+      <Content>
+        <SectionHeader>name</SectionHeader>
+        <TaskInput value={name} onChange={() => null} />
+        <SectionHeader>overview</SectionHeader>
+        <TaskOverview subtasks={subtasks} />
+        <SectionHeader>subtasks</SectionHeader>
+        {subtasks.map(subtask => (
+          <div onClick={() => this.openSubtask(id, subtask.id)}>
+            <Task {...subtask} key={subtask.id} />
+          </div>
+        ))}
+        <SectionHeader>notes</SectionHeader>
+        <TextArea />
+      </Content>
     );
   }
 }
 
 export default TaskDetails;
-
-/* pointer-events: none; */
-/* opacity: 0.5; */
-// z-index: 1;
-
-
-// const transformations = {
-//   // 'taskList': 'translateX(200%)',
-//   // 'subtaskDetails': 'translateX(-200%)',
-//   // 'taskDetails': 'none'
-// }
-
-// const Container = styled.div`
-//   // transform: ${props => transformations[props.activeCard]};
-//   // transform: ${props => !props.loaded ? 'translateX(200%)' : 'none'};
-//   // transition-duration: 1s;
-//   // position: absolute;
-//   // width: inherit;
-// `;

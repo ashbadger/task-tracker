@@ -5,10 +5,11 @@ import prettyMS from 'pretty-ms';
 import Button from './Button';
 
 const TimerBox = styled.p`
-  border: ${props => (props.started ? 'solid 1px rgba(13, 128, 13, 1);' : 'none')} ;
-  padding: 6px;
+  border: ${props => (props.started ? 'solid 1px rgba(13, 128, 13, 1);' : 'solid 1px transparent;')};
   border-radius: 5px;
   box-shadow: 1px 1px 1px rgba(128, 128, 128, 1);
+  padding: 6px;
+  width: 150px;
 `;
 
 class Timer extends React.Component {

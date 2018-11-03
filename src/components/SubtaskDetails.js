@@ -6,7 +6,6 @@ import TaskInput from './TaskInput';
 import TextArea from './TextArea';
 import Timer from './Timer';
 import Button from './Button';
-import BackButton from './BackButton';
 import { getSubtask } from '../services/tasks';
 
 const Content = styled.div`
@@ -32,13 +31,14 @@ const ActionsContainer = styled.div`
 
 const ItemContainer = styled.div`
   text-align: center;
-  padding: 1rem 3rem;
+  padding: 1rem 2rem;
   border: solid 1px rgba(211, 211, 211, 1);
   border-radius: 5px;
   margin: 1rem 0;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  min-height: 116px;
 `;
 
 const SectionHeader = styled.h4`
@@ -70,34 +70,34 @@ class SubtaskDetails extends React.Component {
       .then(subtask => this.setState({ subtask }));
   }
 
+  // TODO: create "updateSubtask"
+
+  // TODO: create "deleteSubtask"
+
   render() {
     const { subtask: { timeSpent, name } } = this.state;
-    const { history } = this.props;
     return (
-      <div>
-        <BackButton history={history} />
-        <Content>
-          <SectionHeader>name</SectionHeader>
-          <TaskInput value={name} onChange={() => null} />
-          <SectionHeader>actions</SectionHeader>
-          <ActionsContainer>
-            <ItemContainer>
-              <small>Time Spent</small>
-              <Timer time={timeSpent} />
-            </ItemContainer>
-            <ItemContainer>
-              <small>Complete Subtask</small>
-              <Button color="green">Complete</Button>
-            </ItemContainer>
-            <ItemContainer>
-              <small>Delete Subtask</small>
-              <Button color="red">delete</Button>
-            </ItemContainer>
-          </ActionsContainer>
-          <SectionHeader>notes</SectionHeader>
-          <TextArea />
-        </Content>
-      </div>
+      <Content>
+        <SectionHeader>name</SectionHeader>
+        <TaskInput value={name} onChange={() => null} />
+        <SectionHeader>actions</SectionHeader>
+        <ActionsContainer>
+          <ItemContainer>
+            <small>Time Spent</small>
+            <Timer time={timeSpent} />
+          </ItemContainer>
+          <ItemContainer>
+            <small>Complete Subtask</small>
+            <Button color="green">Complete</Button>
+          </ItemContainer>
+          <ItemContainer>
+            <small>Delete Subtask</small>
+            <Button color="red">delete</Button>
+          </ItemContainer>
+        </ActionsContainer>
+        <SectionHeader>notes</SectionHeader>
+        <TextArea />
+      </Content>
     );
   }
 }

@@ -4,25 +4,24 @@ import prettyMS from 'pretty-ms';
 import PropTypes from 'prop-types';
 
 const Container = styled.div`
-  height: 4rem;
   background: rgba(252, 252, 252, 1);
-  box-shadow: 2px 2px 2px rgba(211, 211, 211, 1);
   border: solid .5px rgba(191, 191, 191, 1);
   border-radius: 5px;
-  padding: .5rem;
-  margin-bottom: .5rem;
+  box-shadow: 2px 2px 2px rgba(211, 211, 211, 1);
   display: grid;
   grid-auto-columns: 1fr;
   grid-template-areas: 
     'name name name time time'
     'name name name complete complete';
+  height: 4rem;
+  margin-bottom: .5rem;
+  padding: .5rem;
+  transition: background 300ms ease 0s;
 
   &:hover {
     background: rgba(235, 235, 235, 1);
     cursor: pointer;
   };
-
-  transition: background 300ms ease 0s;
 
   small.heading {
     color: rgba(103, 113, 125, 1);

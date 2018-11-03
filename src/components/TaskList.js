@@ -5,8 +5,8 @@ import Task from './Task';
 import { getTasks } from '../services/tasks';
 
 const Tasks = styled.div`
-  overflow: hidden auto;
   height: -webkit-fill-available;
+  overflow: hidden auto;
 `;
 
 class TaskList extends React.Component {
