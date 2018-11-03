@@ -4,14 +4,14 @@ import PropTypes from 'prop-types';
 
 const Container = styled.div`
   background: rgba(210, 210, 210, 1);
-  height: 30px;
-  width: 100%;
-  border-radius: 5px;
-  text-align: center;
-  position: relative;
-  margin-top: 10px;
-  box-shadow: 1px 0px 5px rgba(172, 172, 172, 1);
   border: solid .5px rgba(197, 197, 197, 1);
+  border-radius: 5px;
+  box-shadow: 1px 0px 5px rgba(172, 172, 172, 1);
+  height: 30px;
+  margin-top: 10px;
+  position: relative;
+  text-align: center;
+  width: 100%;
 `;
 
 const ProgressBar = styled.div`
