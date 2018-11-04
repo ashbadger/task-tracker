@@ -67,7 +67,11 @@ class SubtaskDetails extends React.Component {
   componentDidMount() {
     const { match: { params: { id: taskId, subtaskId } } } = this.props;
     getSubtask(taskId, subtaskId)
-      .then(subtask => this.setState({ subtask }));
+      .then(subtask => this.setState(() => ({ subtask })));
+  }
+
+  updateTimeSpentHandler = (time) => {
+    this.setState(() => ({ subtask: { timeSpent: time } }));
   }
 
   // TODO: create "updateSubtask"
@@ -84,7 +88,7 @@ class SubtaskDetails extends React.Component {
         <ActionsContainer>
           <ItemContainer>
             <small>Time Spent</small>
-            <Timer time={timeSpent} />
+            <Timer time={timeSpent} updateTimeSpentHandler={this.updateTimeSpentHandler} />
           </ItemContainer>
           <ItemContainer>
             <small>Complete Subtask</small>

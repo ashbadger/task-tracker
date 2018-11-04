@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import prettyMS from 'pretty-ms';
+import PropTypes from 'prop-types';
 
 import Button from './Button';
 
@@ -12,39 +13,56 @@ const TimerBox = styled.p`
   width: 150px;
 `;
 
+const propTypes = {
+  time: PropTypes.number,
+  updateTimeSpentHandler: PropTypes.func.isRequired,
+};
+
+const defaultProps = {
+  time: 0,
+};
+
 class Timer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      time: 0,
       started: false,
     };
   }
 
-  incrementTime = () => {
+  incrementTimeBySecond = () => {
+    const { updateTimeSpentHandler } = this.props;
+
     this.interval = setInterval(() => {
-      this.setState(state => ({ time: state.time + 1000, started: true }));
+      const { time } = this.props;
+      this.setState(() => ({ started: true }));
+      updateTimeSpentHandler(time + 1000);
     }, 1000);
   };
 
-  stopTime = () => {
+  stopTimeIncrement = () => {
     clearInterval(this.interval);
     this.setState(() => ({ started: false }));
   };
 
   render() {
-    const { started, time } = this.state;
+    const { started } = this.state;
+    const { time } = this.props;
+
     return (
       <div>
         <TimerBox started={started}>{prettyMS(time)}</TimerBox>
         {
           started
-            ? <Button color="red" onClick={this.stopTime}>stop</Button>
-            : <Button color="navy" onClick={this.incrementTime}>start</Button>
+            ? <Button color="red" onClick={this.stopTimeIncrement}>stop</Button>
+            : <Button color="navy" onClick={this.incrementTimeBySecond}>start</Button>
         }
       </div>
     );
   }
 }
+
+Timer.propTypes = propTypes;
+Timer.defaultProps = defaultProps;
 
 export default Timer;
