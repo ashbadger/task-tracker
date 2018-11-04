@@ -17,7 +17,7 @@ const Container = styled.div`
 const ProgressBar = styled.div`
   @keyframes bar-animation {
     0% { width: 0 }
-    100% { width: ${props => props.width}% }
+    100% { width: '${props => props.width}%' }
   };
 
   border-radius: 5px;
