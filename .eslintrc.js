@@ -1,7 +1,6 @@
 module.exports = {
   "env": {
     "browser": true,
-    "es6": true
   },
   "extends": [ 
       "airbnb",
@@ -11,7 +10,7 @@ module.exports = {
     "ecmaFeatures": {
       "jsx": true
     },
-    "ecmaVersion": 6,
+    "ecmaVersion": 8,
     "sourceType": "module"
   },
   "plugins": [
