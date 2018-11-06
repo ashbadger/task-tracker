@@ -6,7 +6,8 @@ import TaskInput from './TaskInput';
 import TextArea from './TextArea';
 import Timer from './Timer';
 import Button from './Button';
-import { getSubtask } from '../services/tasks';
+import TaskService from '../services/tasks';
+import { navigateBack } from '../routers/AppRouter';
 
 const Content = styled.div`
   margin-left: 1.5rem;
@@ -55,35 +56,58 @@ class SubtaskDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      subtask: {
-        id: 0,
-        name: '',
-        notes: '',
-        timeSpent: 0,
-      },
+      name: '',
+      notes: '',
+      timeSpent: 0,
     };
+    this.taskService = new TaskService();
   }
 
   componentDidMount() {
     const { match: { params: { id: taskId, subtaskId } } } = this.props;
-    getSubtask(taskId, subtaskId)
-      .then(subtask => this.setState(() => ({ subtask })));
+    this.taskService.getSubtask(taskId, subtaskId)
+      .then(subtask => this.setState(() => ({ ...subtask })));
   }
+
+  // componentWillUnmount() {
+  //   const { subtask } = this.state;
+  //   this.updateSubtask(subtask);
+  // }
 
   updateTimeSpentHandler = (time) => {
-    this.setState(() => ({ subtask: { timeSpent: time } }));
+    this.setState(() => ({ timeSpent: time }));
   }
 
-  // TODO: create "updateSubtask"
+  updateSubtask = (updates) => {
+    const { match: { params: { id: taskId, subtaskId } } } = this.props;
+    this.taskService.updateSubtask(taskId, subtaskId, updates);
+  }
 
-  // TODO: create "deleteSubtask"
+  onNameChange = (e) => {
+    const name = e.target.value;
+    this.setState(() => ({ name }));
+  }
+
+  onNotesChange = (e) => {
+    const notes = e.target.value;
+    this.setState(() => ({ notes }));
+  }
+
+  deleteSubtask = () => {
+    const { match: { params: { id: taskId, subtaskId } }, history } = this.props;
+
+    return this.taskService.deleteSubtask(taskId, subtaskId)
+      .then(() => {
+        navigateBack(history);
+      });
+  }
 
   render() {
-    const { subtask: { timeSpent, name } } = this.state;
+    const { timeSpent, name, notes } = this.state;
     return (
       <Content>
         <SectionHeader>name</SectionHeader>
-        <TaskInput value={name} onChange={() => null} />
+        <TaskInput value={name} onChange={this.onNameChange} />
         <SectionHeader>actions</SectionHeader>
         <ActionsContainer>
           <ItemContainer>
@@ -91,16 +115,16 @@ class SubtaskDetails extends React.Component {
             <Timer time={timeSpent} updateTimeSpentHandler={this.updateTimeSpentHandler} />
           </ItemContainer>
           <ItemContainer>
-            <small>Complete Subtask</small>
-            <Button color="green">Complete</Button>
+            <small>Subtask Complete</small>
+            <Button color="green" onClick={() => this.updateSubtask({ completed: true })}>Complete</Button>
           </ItemContainer>
           <ItemContainer>
             <small>Delete Subtask</small>
-            <Button color="red">delete</Button>
+            <Button color="red" onClick={() => this.deleteSubtask()}>delete</Button>
           </ItemContainer>
         </ActionsContainer>
         <SectionHeader>notes</SectionHeader>
-        <TextArea />
+        <TextArea value={notes} onChange={this.onNotesChange} />
       </Content>
     );
   }
