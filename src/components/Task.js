@@ -46,14 +46,14 @@ const propTypes = {
   subtasks: PropTypes.arrayOf(PropTypes.object),
   name: PropTypes.string,
   timeSpent: PropTypes.number,
-  complete: PropTypes.bool,
+  completed: PropTypes.bool,
 };
 
 const defaultProps = {
   subtasks: [],
   name: '',
   timeSpent: 0,
-  complete: false,
+  completed: false,
 };
 
 class Task extends React.Component {
@@ -64,7 +64,7 @@ class Task extends React.Component {
 
   render() {
     const {
-      name, timeSpent, subtasks, complete,
+      name, timeSpent, subtasks, completed,
     } = this.props;
 
     return (
@@ -90,7 +90,7 @@ class Task extends React.Component {
             ) : (
               <div>
                 <small className="heading">Completed</small>
-                <small>{complete ? 'Yes' : 'No'}</small>
+                <small>{completed ? 'Yes' : 'No'}</small>
               </div>
             )
           }
