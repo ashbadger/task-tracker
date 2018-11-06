@@ -11,5 +11,5 @@ export default styled.div`
   position: absolute;
   top: 54%;
   transform: translate(-50%, -50%);
-  width: 50vw;
+  width: 60vw;
 `;
