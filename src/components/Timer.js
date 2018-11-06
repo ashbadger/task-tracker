@@ -55,7 +55,7 @@ class Timer extends React.Component {
         {
           started
             ? <Button color="red" onClick={this.stopTimeIncrement}>stop</Button>
-            : <Button color="navy" onClick={this.incrementTimeBySecond}>start</Button>
+            : <Button color="blue" onClick={this.incrementTimeBySecond}>start</Button>
         }
       </div>
     );

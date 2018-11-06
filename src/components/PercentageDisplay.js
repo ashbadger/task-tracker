@@ -22,7 +22,7 @@ const ProgressBar = styled.div`
 
   border-radius: 5px;
   height: inherit;
-  background: rgba(0, 159, 0, 1);
+  background: rgb(126, 166, 126);
   position: absolute;
   animation: bar-animation 1s 0s ease 1 forwards;
   width: ${props => props.width}%;
@@ -34,7 +34,7 @@ const ProgressText = styled.small`
   position: inherit;
   top: 5px;
   font-weight: 700;
-  color: black;
+  color: ${props => (props.percentage > 60 ? 'white' : 'rgba(19, 19, 19, 0.8)')};
 `;
 
 const propTypes = {
@@ -44,7 +44,7 @@ const propTypes = {
 class PercentageDisplay extends React.Component {
   getAggregatePercentage() {
     const { tasks: subtasks } = this.props;
-    return ((subtasks.filter(t => t.complete).length / subtasks.length).toFixed(2) * 100) || 0;
+    return ((subtasks.filter(t => t.completed).length / subtasks.length).toFixed(2) * 100) || 0;
   }
 
   render() {
@@ -52,7 +52,7 @@ class PercentageDisplay extends React.Component {
 
     return (
       <Container>
-        <ProgressText>
+        <ProgressText percentage={percentage}>
           {percentage}
           %
         </ProgressText>
