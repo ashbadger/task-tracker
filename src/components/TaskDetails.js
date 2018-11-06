@@ -5,7 +5,8 @@ import Task from './Task';
 import TaskOverview from './TaskOverview';
 import TextArea from './TextArea';
 import TaskInput from './TaskInput';
-import { getTask } from '../services/tasks';
+import TaskService from '../services/tasks';
+import AddButton from './AddButton';
 
 const Content = styled.div`
   height: -webkit-fill-available;
@@ -24,41 +25,73 @@ class TaskDetails extends React.Component {
     super(props);
     const { match: { params: { id } } } = this.props;
     this.state = {
-      task: {
-        id,
-        name: '',
-        subtasks: [{}],
-        notes: '',
-      },
+      id,
+      name: '',
+      subtasks: [{}],
+      notes: '',
     };
+
+    this.taskService = new TaskService();
   }
 
   componentDidMount() {
-    const { match: { params: { id } } } = this.props;
-    getTask(id).then(task => this.setState({ task }));
+    const { id } = this.state;
+    this.taskService.getTask(id).then(task => this.setState({ ...task }));
   }
 
-  openSubtask = (taskId, subtaskId) => {
+  openSubtask = (subtaskId) => {
     const { history } = this.props;
-    history.push(`/tasks/${taskId}/${subtaskId}`);
+    const { id } = this.state;
+
+    history.push(`/tasks/${id}/${subtaskId}`);
+  }
+
+  createSubtask = async (subtask) => {
+    const { id } = this.state;
+    const subtaskDocument = await this.taskService.createSubtask(id, subtask);
+    this.setState((prevState) => {
+      const { subtasks } = prevState;
+      return { subtasks: [...subtasks, subtaskDocument] };
+    });
+  }
+
+  onNameChange = (e) => {
+    const name = e.target.value;
+    this.setState(() => ({ name }));
+  }
+
+  onNotesChange = (e) => {
+    const notes = e.target.value;
+    this.setState(() => ({ notes }));
   }
 
   render() {
-    const { task: { name, subtasks, id } } = this.state;
+    const { name, subtasks, notes } = this.state;
+
+    const subtask = {
+      name: 'create more subtasks!',
+      completed: false,
+      timeSpent: 12000,
+    };
+
+    // TODO: remove button used for generating fixture data
+
     return (
       <Content>
+        <button type="button" onClick={() => this.createSubtask(subtask)}>add some!!</button>
         <SectionHeader>name</SectionHeader>
-        <TaskInput value={name} onChange={() => null} />
+        <TaskInput value={name} onChange={this.onNameChange} />
         <SectionHeader>overview</SectionHeader>
         <TaskOverview subtasks={subtasks} />
         <SectionHeader>subtasks</SectionHeader>
         {subtasks.map(subtask => (
-          <div onClick={() => this.openSubtask(id, subtask.id)}>
+          <div onClick={() => this.openSubtask(subtask.id)}>
             <Task {...subtask} key={subtask.id} />
           </div>
         ))}
+        <AddButton color="green">Add Subtask</AddButton>
         <SectionHeader>notes</SectionHeader>
-        <TextArea />
+        <TextArea value={notes} onChange={this.onNotesChange} />
       </Content>
     );
   }
