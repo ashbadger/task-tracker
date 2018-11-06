@@ -1,29 +1,62 @@
 import db from '../firebase/firebase';
 
-const getTasks = () => db.collection('tasks').get()
-  .then(tasks => tasks.docs.map(task => task.data()));
+export default class TaskService {
+  createTask = (task) => {
+    return db.collection('tasks').add(task)
+      .then(res => res.data());
+  };
 
-const getTask = id => db.collection('tasks').doc(`/${id}`).get()
-  .then(task => task.data());
+  getTasks = () => {
+    return db.collection('tasks').get()
+      .then(tasks => tasks.docs.map(task => task.data()));
+  };
 
-const getSubtask = (taskId, subtaskId) => db.collection('tasks').doc(`/${taskId}`).get()
-  .then(task => task.data().subtasks.find(subtask => subtask.id == subtaskId));
+  getTask = async (id) => {
+    const task = await db.collection('tasks').doc(id).get()
+      .then(t => t.data());
 
-const createTask = task => db.collection('tasks').add(task)
-  .then(res => res.data());
+    const subtasks = await this.getSubtasks(id);
 
-const updateTask = (id, updates) => db.collection('tasks').doc(`/${id}`).update(updates)
-  .then(task => task.data());
+    return { ...task, subtasks };
+  };
 
-const updateSubtasks = (task) => {
-  const { id } = task;
-  return db.collection('tasks').doc(`/${id}`).set(task)
-    .then(res => res.data());
-};
+  updateTask = (id, updates) => {
+    return db.collection('tasks').doc(id).update(updates)
+      .then(task => task.data());
+  };
 
-const deleteTask = id => db.collection('tasks').doc(`/${id}`).delete()
-  .then(task => task.data());
+  deleteTask = (id) => {
+    return db.collection('tasks').doc(id).delete()
+      .then(task => task.data());
+  };
 
-export {
-  getTasks, getTask, getSubtask, createTask, updateTask, updateSubtasks, deleteTask,
-};
+  createSubtask = (taskId, subtask) => {
+    return db.collection(`tasks/${taskId}/subtasks`).add(subtask)
+      .then(task => task.get())
+      .then(task => ({ id: task.id, ...task.data() }));
+  };
+
+  getSubtasks = (taskId) => {
+    return db.collection(`tasks/${taskId}/subtasks`).get()
+      .then((tasks) => {
+        const subtasks = [];
+        tasks.forEach(task => subtasks.push({ id: task.id, ...task.data() }));
+        return subtasks;
+      });
+  };
+
+  getSubtask = (taskId, subtaskId) => {
+    return db.collection(`tasks/${taskId}/subtasks`).doc(subtaskId).get()
+      .then(task => task.data());
+  };
+
+  updateSubtask = (taskId, subtaskId, updates) => {
+    return db.collection(`tasks/${taskId}/subtasks`).doc(subtaskId).update(updates)
+      .then(task => task.data());
+  };
+
+  deleteSubtask = (taskId, subtaskId) => {
+    return db.collection(`tasks/${taskId}/subtasks`).doc(subtaskId).delete()
+      .then(task => task.data());
+  };
+}
