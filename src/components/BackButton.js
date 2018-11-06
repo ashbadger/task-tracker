@@ -3,6 +3,8 @@ import { FiArrowLeftCircle } from 'react-icons/fi';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
+import { navigateBack } from '../routers/AppRouter';
+
 const Button = styled.div`
   left: .5rem;
   position: absolute;
@@ -20,24 +22,11 @@ const propTypes = {
   location: PropTypes.shape({}).isRequired,
 };
 
-class BackButton extends React.Component {
-  navigateBack = () => {
-    const { history } = this.props;
-    const location = {
-      pathname: history.location.pathname.split('/').slice(0, -1).join('/'),
-      navigateToPrevious: true,
-    };
-    history.push(location);
-  }
-
-  render() {
-    return (
-      <Button>
-        <FiArrowLeftCircle fill="transparent" size="2rem" color="rgb(173, 173, 173)" strokeWidth={1.5} className="button" onClick={this.navigateBack} />
-      </Button>
-    );
-  }
-}
+const BackButton = ({ history }) => (
+  <Button>
+    <FiArrowLeftCircle fill="transparent" size="2rem" color="rgb(173, 173, 173)" strokeWidth={1.5} className="button" onClick={() => navigateBack(history)} />
+  </Button>
+);
 
 BackButton.propTypes = propTypes;
 

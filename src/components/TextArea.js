@@ -1,7 +1,6 @@
-import React from 'react';
 import styled from 'styled-components';
 
-const Text = styled.textarea`
+const TextArea = styled.textarea`
   border: none;
   border-radius: .5rem;
   box-shadow: 0 1px 5px rgba(125, 125, 125, 1);
@@ -17,7 +16,5 @@ const Text = styled.textarea`
     outline: none;
   }
 `;
-
-const TextArea = () => (<Text />);
 
 export default TextArea;

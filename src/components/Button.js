@@ -6,12 +6,12 @@ const colors = {
     'border-bottom': 'rgba(195, 0, 0, 1)',
   },
   green: {
-    background: 'rgba(46, 170, 46, 1)',
-    'border-bottom': 'rgba(0, 128, 0, 1)',
+    background: 'rgb(126, 166, 126)',
+    'border-bottom': 'rgb(89, 139, 89);',
   },
-  navy: {
-    background: 'rgba(43, 100, 167, 1)',
-    'border-bottom': 'rgba(31, 71, 117, 1)',
+  blue: {
+    background: 'rgb(68, 123, 188);',
+    'border-bottom': 'rgb(41, 83, 131);',
   },
 };
 

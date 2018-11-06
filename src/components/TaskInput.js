@@ -4,7 +4,7 @@ export default styled.input`
   background-color: transparent;
   border: transparent;
   border-bottom: solid 1px rgba(0, 0, 0, 1);
-  color: rgba(53, 59, 90, 1);
+  color: rgb(45, 49, 72);
   font-size: 2rem;
   font-weight: 500;
   margin-bottom: 1rem;
