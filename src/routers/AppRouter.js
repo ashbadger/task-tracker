@@ -12,6 +12,14 @@ const Container = styled.div`
   position: relative;
 `;
 
+const navigateBack = (history) => {
+  const location = {
+    pathname: history.location.pathname.split('/').slice(0, -1).join('/'),
+    navigateToPrevious: true,
+  };
+  history.push(location);
+};
+
 class AppRouter extends React.Component {
   stripSlashes = string => string.replace('/', '');
 
@@ -54,5 +62,4 @@ class AppRouter extends React.Component {
   }
 }
 
-
-export default AppRouter;
+export { navigateBack, AppRouter };

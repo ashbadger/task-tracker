@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import Task from './Task';
-import { getTasks } from '../services/tasks';
+import TaskService from '../services/tasks';
 
 const Tasks = styled.div`
   height: -webkit-fill-available;
@@ -13,10 +13,11 @@ class TaskList extends React.Component {
   constructor(props) {
     super(props);
     this.state = { tasks: [] };
+    this.taskService = new TaskService();
   }
 
   componentDidMount() {
-    getTasks().then(tasks => this.setState({ tasks }));
+    this.taskService.getTasks().then(tasks => this.setState({ tasks }));
   }
 
   openTask = (id) => {
