@@ -98,22 +98,17 @@ class Task extends React.Component {
           <small>{prettyMS((timeSpentAgg || 0))}</small>
         </TimeSpent>
         <Complete>
-          {
-            isSubtask ? (
-              <div>
-                <small className="heading">Completed</small>
-                <small>{completed ? 'Yes' : 'No'}</small>
-              </div>
+          <div>
+            <small className="heading">Complete</small>
+            {isSubtask ? (
+              <small>{completed ? 'Yes' : 'No'}</small>
             ) : (
-              <div>
-                <small className="heading">Percentage</small>
-                <small>
-                  {percentageCompleteAgg}
-                  %
-                </small>
-              </div>
-            )
-          }
+              <small>
+                {percentageCompleteAgg}
+                %
+              </small>
+            )}
+          </div>
         </Complete>
       </Container>
     );
