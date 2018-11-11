@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import prettyMS from 'pretty-ms';
 import PropTypes from 'prop-types';
 
+import getSubtasksAggs from '../utils/getSubtasksAggs';
+
 const Container = styled.div`
   background: rgba(252, 252, 252, 1);
   border: solid .5px rgba(191, 191, 191, 1);
@@ -66,20 +68,13 @@ class Task extends React.Component {
   }
 
   componentDidMount() {
-    const { isSubtask } = this.props;
+    const { isSubtask, subtasks } = this.props;
     const isTask = !isSubtask;
 
     if (isTask) {
-      const aggregates = this.getAggregates();
+      const aggregates = getSubtasksAggs(subtasks);
       this.setState(() => (aggregates));
     }
-  }
-
-  getAggregates() {
-    const { subtasks } = this.props;
-    const percentageCompleteAgg = (subtasks.filter(t => t.completed).length / subtasks.length).toFixed(2) * 100 || 0;
-    const timeSpentAgg = subtasks.map(s => s.timeSpent).reduce((acc, val) => acc + val, 0);
-    return { percentageCompleteAgg, timeSpentAgg };
   }
 
   render() {
