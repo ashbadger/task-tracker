@@ -86,7 +86,7 @@ class TaskDetails extends React.Component {
         <SectionHeader>subtasks</SectionHeader>
         {subtasks.map(subtask => (
           <div onClick={() => this.openSubtask(subtask.id)}>
-            <Task {...subtask} key={subtask.id} />
+            <Task {...subtask} isSubtask key={subtask.id} />
           </div>
         ))}
         <AddButton color="green">Add Subtask</AddButton>
