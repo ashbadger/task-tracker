@@ -38,29 +38,21 @@ const ProgressText = styled.small`
 `;
 
 const propTypes = {
-  tasks: PropTypes.arrayOf(PropTypes.object).isRequired,
+  percentage: PropTypes.number.isRequired,
 };
 
-class PercentageDisplay extends React.Component {
-  getAggregatePercentage() {
-    const { tasks: subtasks } = this.props;
-    return ((subtasks.filter(t => t.completed).length / subtasks.length).toFixed(2) * 100) || 0;
-  }
-
-  render() {
-    const percentage = this.getAggregatePercentage();
-
-    return (
-      <Container>
-        <ProgressText percentage={percentage}>
-          {percentage}
-          %
-        </ProgressText>
-        <ProgressBar width={percentage} />
-      </Container>
-    );
-  }
-}
+const PercentageDisplay = (props) => {
+  const { percentage } = props;
+  return (
+    <Container>
+      <ProgressText percentage={percentage}>
+        {percentage}
+        %
+      </ProgressText>
+      <ProgressBar width={percentage} />
+    </Container>
+  );
+};
 
 PercentageDisplay.propTypes = propTypes;
 
