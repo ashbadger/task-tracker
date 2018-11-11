@@ -24,13 +24,11 @@ export default class TaskService {
   };
 
   updateTask = (id, updates) => {
-    return db.collection('tasks').doc(id).update(updates)
-      .then(task => task.data());
+    return db.collection('tasks').doc(id).update(updates);
   };
 
   deleteTask = (id) => {
-    return db.collection('tasks').doc(id).delete()
-      .then(task => task.data());
+    return db.collection('tasks').doc(id).delete();
   };
 
   createSubtask = (taskId, subtask) => {
@@ -54,12 +52,10 @@ export default class TaskService {
   };
 
   updateSubtask = (taskId, subtaskId, updates) => {
-    return db.collection(`tasks/${taskId}/subtasks`).doc(subtaskId).update(updates)
-      .then(task => task.data());
+    return db.collection(`tasks/${taskId}/subtasks`).doc(subtaskId).update(updates);
   };
 
   deleteSubtask = (taskId, subtaskId) => {
-    return db.collection(`tasks/${taskId}/subtasks`).doc(subtaskId).delete()
-      .then(task => task.data());
+    return db.collection(`tasks/${taskId}/subtasks`).doc(subtaskId).delete();
   };
 }
