@@ -45,27 +45,52 @@ const Complete = styled.div`
 const propTypes = {
   subtasks: PropTypes.arrayOf(PropTypes.object),
   name: PropTypes.string,
-  timeSpent: PropTypes.number,
   completed: PropTypes.bool,
+  isSubtask: PropTypes.bool,
 };
 
 const defaultProps = {
   subtasks: [],
   name: '',
-  timeSpent: 0,
   completed: false,
+  isSubtask: false,
 };
 
 class Task extends React.Component {
-  getAggregatePercentage() {
+  constructor(props) {
+    super(props);
+    this.state = {
+      percentageCompleteAgg: 0,
+      timeSpentAgg: 0,
+    };
+  }
+
+  componentDidMount() {
+    const { isSubtask } = this.props;
+    const isTask = !isSubtask;
+
+    if (isTask) {
+      const aggregates = this.getAggregates();
+      this.setState(() => (aggregates));
+    }
+  }
+
+  getAggregates() {
     const { subtasks } = this.props;
-    return (subtasks.filter(t => t.complete).length / subtasks.length).toFixed(2) * 100 || 0;
+    const percentageCompleteAgg = (subtasks.filter(t => t.completed).length / subtasks.length).toFixed(2) * 100 || 0;
+    const timeSpentAgg = subtasks.map(s => s.timeSpent).reduce((acc, val) => acc + val, 0);
+    return { percentageCompleteAgg, timeSpentAgg };
   }
 
   render() {
     const {
-      name, timeSpent, subtasks, completed,
+      name, completed, isSubtask,
     } = this.props;
+
+    const {
+      percentageCompleteAgg,
+      timeSpentAgg,
+    } = this.state;
 
     return (
       <Container>
@@ -75,22 +100,22 @@ class Task extends React.Component {
         </Name>
         <TimeSpent>
           <small className="heading">Time Spent </small>
-          <small>{prettyMS((timeSpent || 0))}</small>
+          <small>{prettyMS((timeSpentAgg || 0))}</small>
         </TimeSpent>
         <Complete>
           {
-            subtasks ? (
-              <div>
-                <small className="heading">Percentage</small>
-                <small>
-                  {this.getAggregatePercentage()}
-                  %
-                </small>
-              </div>
-            ) : (
+            isSubtask ? (
               <div>
                 <small className="heading">Completed</small>
                 <small>{completed ? 'Yes' : 'No'}</small>
+              </div>
+            ) : (
+              <div>
+                <small className="heading">Percentage</small>
+                <small>
+                  {percentageCompleteAgg}
+                  %
+                </small>
               </div>
             )
           }
