@@ -9,8 +9,8 @@ export default class TaskService {
   getTasks = async () => {
     return Promise.all(await db.collection('tasks').get()
       .then(querySnapshot => querySnapshot.docs.map(doc => doc.data()))
-      .then(docDatas => docDatas.map(async (task) => {
-        return this.getSubtasks(task.id).then(subtasks => ({ ...task, subtasks }));
+      .then(docs => docs.map(async (doc) => {
+        return this.getSubtasks(doc.id).then(subtasks => ({ ...doc, subtasks }));
       })));
   };
 
