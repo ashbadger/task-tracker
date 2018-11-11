@@ -7,6 +7,7 @@ import TextArea from './TextArea';
 import TaskInput from './TaskInput';
 import TaskService from '../services/tasks';
 import AddButton from './AddButton';
+import getSubtasksAggs from '../utils/getSubtasksAggs';
 
 const Content = styled.div`
   height: -webkit-fill-available;
@@ -29,6 +30,8 @@ class TaskDetails extends React.Component {
       name: '',
       subtasks: [{}],
       notes: '',
+      percentageCompleteAgg: 0,
+      timeSpentAgg: 0,
     };
 
     this.taskService = new TaskService();
@@ -36,7 +39,10 @@ class TaskDetails extends React.Component {
 
   componentDidMount() {
     const { id } = this.state;
-    this.taskService.getTask(id).then(task => this.setState({ ...task }));
+    this.taskService.getTask(id).then((task) => {
+      const aggregates = getSubtasksAggs(task.subtasks);
+      this.setState({ ...task, ...aggregates });
+    });
   }
 
   openSubtask = (subtaskId) => {
@@ -66,7 +72,9 @@ class TaskDetails extends React.Component {
   }
 
   render() {
-    const { name, subtasks, notes } = this.state;
+    const {
+      name, subtasks, notes, percentageCompleteAgg, timeSpentAgg,
+    } = this.state;
 
     const subtask = {
       name: 'create more subtasks!',
@@ -82,7 +90,7 @@ class TaskDetails extends React.Component {
         <SectionHeader>name</SectionHeader>
         <TaskInput value={name} onChange={this.onNameChange} />
         <SectionHeader>overview</SectionHeader>
-        <TaskOverview subtasks={subtasks} />
+        <TaskOverview timeSpent={timeSpentAgg} percentageComplete={percentageCompleteAgg} />
         <SectionHeader>subtasks</SectionHeader>
         {subtasks.map(subtask => (
           <div onClick={() => this.openSubtask(subtask.id)}>

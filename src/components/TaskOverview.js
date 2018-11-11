@@ -19,31 +19,26 @@ const Container = styled.div`
 `;
 
 const propTypes = {
-  subtasks: PropTypes.arrayOf(PropTypes.object).isRequired,
+  timeSpent: PropTypes.number.isRequired,
+  percentageComplete: PropTypes.number.isRequired,
 };
 
-class TaskOverview extends React.Component {
-  totalTimeSpent() {
-    const { subtasks } = this.props;
-    return subtasks.map(t => t.timeSpent).reduce((a, b) => a + b, 0) || 0;
-  }
+const TaskOverview = (props) => {
+  const { timeSpent, percentageComplete } = props;
 
-  render() {
-    const { subtasks } = this.props;
-    return (
-      <Container>
-        <div>
-          <small>Total Time Spent</small>
-          <p>{prettyMS(this.totalTimeSpent())}</p>
-        </div>
-        <div>
-          <small>Total Percentage Complete</small>
-          <PercentageDisplay tasks={subtasks} />
-        </div>
-      </Container>
-    );
-  }
-}
+  return (
+    <Container>
+      <div>
+        <small>Total Time Spent</small>
+        <p>{prettyMS(timeSpent)}</p>
+      </div>
+      <div>
+        <small>Total Percentage Complete</small>
+        <PercentageDisplay percentage={percentageComplete} />
+      </div>
+    </Container>
+  );
+};
 
 TaskOverview.propTypes = propTypes;
 
