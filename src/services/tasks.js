@@ -3,12 +3,13 @@ import db from '../firebase/firebase';
 export default class TaskService {
   createTask = (task) => {
     return db.collection('tasks').add(task)
-      .then(res => res.data());
+      .then(documentRef => documentRef.get())
+      .then(docSnapshot => ({ id: docSnapshot.id, ...docSnapshot.data() }));
   };
 
   getTasks = async () => {
     return Promise.all(await db.collection('tasks').get()
-      .then(querySnapshot => querySnapshot.docs.map(doc => doc.data()))
+      .then(querySnapshot => querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })))
       .then(docs => docs.map(async (doc) => {
         return this.getSubtasks(doc.id).then(subtasks => ({ ...doc, subtasks }));
       })));
@@ -16,7 +17,7 @@ export default class TaskService {
 
   getTask = async (id) => {
     const task = await db.collection('tasks').doc(id).get()
-      .then(t => t.data());
+      .then(t => ({ ...t.data(), id: t.id }));
 
     const subtasks = await this.getSubtasks(id);
 
@@ -39,11 +40,7 @@ export default class TaskService {
 
   getSubtasks = (taskId) => {
     return db.collection(`tasks/${taskId}/subtasks`).get()
-      .then((tasks) => {
-        const subtasks = [];
-        tasks.forEach(task => subtasks.push({ id: task.id, ...task.data() }));
-        return subtasks;
-      });
+      .then(querySnapshot => querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
   };
 
   getSubtask = (taskId, subtaskId) => {

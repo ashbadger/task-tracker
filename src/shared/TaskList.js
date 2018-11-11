@@ -5,7 +5,7 @@ import Task from './Task';
 import TaskService from '../services/tasks';
 
 const Tasks = styled.div`
-  height: -webkit-fill-available;
+  height: 70vh;
   overflow: hidden auto;
 `;
 

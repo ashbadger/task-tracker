@@ -1,24 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import Task from './Task';
-import TaskOverview from './TaskOverview';
-import TextArea from './TextArea';
-import TaskInput from './TaskInput';
+import TaskOverview from './TaskOverviewPage';
 import TaskService from '../services/tasks';
-import AddButton from './AddButton';
+import Task from '../shared/Task';
+import TextArea from '../shared/TextArea';
+import TaskInput from '../shared/TaskInput';
+import FullWidthButton from '../shared/FullWidthButton';
 import getSubtasksAggs from '../utils/getSubtasksAggs';
+import SectionHeader from '../shared/SectionHeader';
 
 const Content = styled.div`
   height: -webkit-fill-available;
   margin-left: 1.5rem;
   overflow: hidden auto;
   padding: 0 1rem;
-`;
-
-const SectionHeader = styled.h4`
-  color: rgba(91, 91, 91, 1);
-  font-weight: 500;
 `;
 
 class TaskDetails extends React.Component {
@@ -61,7 +57,14 @@ class TaskDetails extends React.Component {
     });
   }
 
-  onNameChange = (e) => {
+  deleteTask = () => {
+    const { id } = this.state;
+    const { history } = this.props;
+
+    this.taskService.deleteTask(id).then(() => history.push('/tasks'));
+  }
+
+  onNameChangeHandler = (e) => {
     const name = e.target.value;
     this.setState(() => ({ name }));
   }
@@ -73,22 +76,13 @@ class TaskDetails extends React.Component {
 
   render() {
     const {
-      name, subtasks, notes, percentageCompleteAgg, timeSpentAgg,
+      id, name, subtasks, notes, percentageCompleteAgg, timeSpentAgg,
     } = this.state;
-
-    const subtask = {
-      name: 'create more subtasks!',
-      completed: false,
-      timeSpent: 12000,
-    };
-
-    // TODO: remove button used for generating fixture data
+    const { history } = this.props;
 
     return (
       <Content>
-        <button type="button" onClick={() => this.createSubtask(subtask)}>add some!!</button>
-        <SectionHeader>name</SectionHeader>
-        <TaskInput value={name} onChange={this.onNameChange} />
+        <TaskInput name={name} onNameChangeHandler={this.onNameChangeHandler} />
         <SectionHeader>overview</SectionHeader>
         <TaskOverview timeSpent={timeSpentAgg} percentageComplete={percentageCompleteAgg} />
         <SectionHeader>subtasks</SectionHeader>
@@ -97,9 +91,10 @@ class TaskDetails extends React.Component {
             <Task {...subtask} isSubtask key={subtask.id} />
           </div>
         ))}
-        <AddButton color="green">Add Subtask</AddButton>
+        <FullWidthButton color="green" onClick={() => history.push(`/tasks/${id}/create`)}>Add Subtask</FullWidthButton>
         <SectionHeader>notes</SectionHeader>
         <TextArea value={notes} onChange={this.onNotesChange} />
+        <FullWidthButton color="red" onClick={() => this.deleteTask()}>Delete Task</FullWidthButton>
       </Content>
     );
   }

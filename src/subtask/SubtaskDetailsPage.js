@@ -2,10 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-import TaskInput from './TaskInput';
-import TextArea from './TextArea';
-import Timer from './Timer';
-import Button from './Button';
+import TaskInput from '../shared/TaskInput';
+import TextArea from '../shared/TextArea';
+import Timer from '../shared/Timer';
+import Button from '../shared/Button';
 import TaskService from '../services/tasks';
 import { navigateBack } from '../routers/AppRouter';
 
@@ -97,7 +97,7 @@ class SubtaskDetails extends React.Component {
     return this.taskService.updateSubtask(taskId, subtaskId, updates);
   }
 
-  onNameChange = (e) => {
+  onNameChangeHandler = (e) => {
     const name = e.target.value;
     this.setState(() => ({ name }));
   }
@@ -123,8 +123,7 @@ class SubtaskDetails extends React.Component {
 
     return (
       <Content>
-        <SectionHeader>name</SectionHeader>
-        <TaskInput value={name} onChange={this.onNameChange} />
+        <TaskInput name={name} onNameChangeHandler={this.onNameChangeHandler} />
         <SectionHeader>actions</SectionHeader>
         <ActionsContainer>
           <ItemContainer>
@@ -139,12 +138,12 @@ class SubtaskDetails extends React.Component {
             { completed ? (
               <React.Fragment>
                 <small>Undo Complete Subtask</small>
-                <Button color="red" onClick={() => this.updateSubtask({ completed: false })}>Undo Complete</Button>
+                <Button color="red" onClick={() => this.updateAndGetSubtask({ completed: false })}>Undo Complete</Button>
               </React.Fragment>
             ) : (
               <React.Fragment>
                 <small>Complete Subtask</small>
-                <Button color="green" onClick={() => this.updateSubtask({ completed: true })}>Complete</Button>
+                <Button color="green" onClick={() => this.updateAndGetSubtask({ completed: true })}>Complete</Button>
               </React.Fragment>
             )}
           </ItemContainer>
