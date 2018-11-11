@@ -49,6 +49,7 @@ const propTypes = {
   name: PropTypes.string,
   completed: PropTypes.bool,
   isSubtask: PropTypes.bool,
+  timeSpent: PropTypes.number,
 };
 
 const defaultProps = {
@@ -56,6 +57,7 @@ const defaultProps = {
   name: '',
   completed: false,
   isSubtask: false,
+  timeSpent: null,
 };
 
 class Task extends React.Component {
@@ -79,7 +81,7 @@ class Task extends React.Component {
 
   render() {
     const {
-      name, completed, isSubtask,
+      name, completed, isSubtask, timeSpent,
     } = this.props;
 
     const {
@@ -95,7 +97,7 @@ class Task extends React.Component {
         </Name>
         <TimeSpent>
           <small className="heading">Time Spent </small>
-          <small>{prettyMS((timeSpentAgg || 0))}</small>
+          <small>{prettyMS(timeSpentAgg || timeSpent || 0)}</small>
         </TimeSpent>
         <Complete>
           <div>
