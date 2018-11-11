@@ -58,29 +58,43 @@ class SubtaskDetails extends React.Component {
     this.state = {
       name: '',
       notes: '',
+      completed: false,
       timeSpent: 0,
     };
     this.taskService = new TaskService();
   }
 
   componentDidMount() {
-    const { match: { params: { id: taskId, subtaskId } } } = this.props;
-    this.taskService.getSubtask(taskId, subtaskId)
-      .then(subtask => this.setState(() => ({ ...subtask })));
+    this.getSubtask();
   }
 
-  // componentWillUnmount() {
-  //   const { subtask } = this.state;
-  //   this.updateSubtask(subtask);
-  // }
+  componentWillUnmount() {
+    const { ...subtask } = this.state;
+    this.updateSubtask(subtask).catch(() => console.log('task does not exist'));
+  }
 
   updateTimeSpentHandler = (time) => {
     this.setState(() => ({ timeSpent: time }));
   }
 
+  watchTimerStopHandler = () => {
+    const { ...subtask } = this.state;
+    this.updateSubtask(subtask);
+  }
+
+  getSubtask = () => {
+    const { match: { params: { id: taskId, subtaskId } } } = this.props;
+    this.taskService.getSubtask(taskId, subtaskId)
+      .then(subtask => this.setState(() => ({ ...subtask })));
+  }
+
+  updateAndGetSubtask = (updates) => {
+    this.updateSubtask(updates).then(() => this.getSubtask());
+  }
+
   updateSubtask = (updates) => {
     const { match: { params: { id: taskId, subtaskId } } } = this.props;
-    this.taskService.updateSubtask(taskId, subtaskId, updates);
+    return this.taskService.updateSubtask(taskId, subtaskId, updates);
   }
 
   onNameChange = (e) => {
@@ -103,7 +117,10 @@ class SubtaskDetails extends React.Component {
   }
 
   render() {
-    const { timeSpent, name, notes } = this.state;
+    const {
+      timeSpent, name, notes, completed,
+    } = this.state;
+
     return (
       <Content>
         <SectionHeader>name</SectionHeader>
@@ -112,11 +129,24 @@ class SubtaskDetails extends React.Component {
         <ActionsContainer>
           <ItemContainer>
             <small>Time Spent</small>
-            <Timer time={timeSpent} updateTimeSpentHandler={this.updateTimeSpentHandler} />
+            <Timer
+              time={timeSpent}
+              updateTimeSpentHandler={this.updateTimeSpentHandler}
+              watchTimerStopHandler={this.watchTimerStopHandler}
+            />
           </ItemContainer>
           <ItemContainer>
-            <small>Subtask Complete</small>
-            <Button color="green" onClick={() => this.updateSubtask({ completed: true })}>Complete</Button>
+            { completed ? (
+              <React.Fragment>
+                <small>Undo Complete Subtask</small>
+                <Button color="red" onClick={() => this.updateSubtask({ completed: false })}>Undo Complete</Button>
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                <small>Complete Subtask</small>
+                <Button color="green" onClick={() => this.updateSubtask({ completed: true })}>Complete</Button>
+              </React.Fragment>
+            )}
           </ItemContainer>
           <ItemContainer>
             <small>Delete Subtask</small>

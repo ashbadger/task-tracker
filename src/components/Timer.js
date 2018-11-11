@@ -16,6 +16,7 @@ const TimerBox = styled.p`
 const propTypes = {
   time: PropTypes.number,
   updateTimeSpentHandler: PropTypes.func.isRequired,
+  watchTimerStopHandler: PropTypes.func.isRequired,
 };
 
 const defaultProps = {
@@ -41,8 +42,12 @@ class Timer extends React.Component {
   };
 
   stopTimeIncrement = () => {
+    const { watchTimerStopHandler } = this.props;
+
     clearInterval(this.interval);
     this.setState(() => ({ started: false }));
+
+    watchTimerStopHandler();
   };
 
   render() {
