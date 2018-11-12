@@ -3,7 +3,7 @@ import { FiArrowLeftCircle } from 'react-icons/fi';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-import { navigateBack } from '../routers/AppRouter';
+import { navigateBack } from '../../routers/AppRouter';
 
 const Button = styled.div`
   left: .5rem;

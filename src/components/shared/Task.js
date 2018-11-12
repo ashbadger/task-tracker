@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import prettyMS from 'pretty-ms';
 import PropTypes from 'prop-types';
 
-import getSubtasksAggs from '../utils/getSubtasksAggs';
+import getSubtasksAggs from '../../utils/getSubtasksAggs';
 
 const Container = styled.div`
   background: rgba(252, 252, 252, 1);

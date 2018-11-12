@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import Task from './Task';
-import TaskService from '../services/tasks';
+import TaskService from '../../services/tasks';
 
 const Tasks = styled.div`
   height: 70vh;

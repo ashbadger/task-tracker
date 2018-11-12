@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import TaskInput from './TaskInput';
+import TaskNameInput from './TaskNameInput';
 import TextArea from './TextArea';
 import SectionHeader from './SectionHeader';
 import FullWidthButton from './FullWidthButton';
@@ -34,7 +34,7 @@ class TaskCreate extends React.Component {
     const { saveHandler } = this.props;
     return (
       <div>
-        <TaskInput name={name} onNameChangeHandler={this.onNameChangeHandler} />
+        <TaskNameInput name={name} onNameChangeHandler={this.onNameChangeHandler} />
         <SectionHeader>notes</SectionHeader>
         <TextArea value={notes} onChange={this.onNotesChange} />
         <Container>

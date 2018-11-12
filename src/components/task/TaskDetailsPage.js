@@ -2,12 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 
 import TaskOverview from './TaskOverviewPage';
-import TaskService from '../services/tasks';
+import TaskService from '../../services/tasks';
 import Task from '../shared/Task';
 import TextArea from '../shared/TextArea';
-import TaskInput from '../shared/TaskInput';
+import TaskNameInput from '../shared/TaskNameInput';
 import FullWidthButton from '../shared/FullWidthButton';
-import getSubtasksAggs from '../utils/getSubtasksAggs';
+import getSubtasksAggs from '../../utils/getSubtasksAggs';
 import SectionHeader from '../shared/SectionHeader';
 
 const Content = styled.div`
@@ -39,6 +39,11 @@ class TaskDetails extends React.Component {
       const aggregates = getSubtasksAggs(task.subtasks);
       this.setState({ ...task, ...aggregates });
     });
+  }
+
+  componentWillUnmount() {
+    const { id, ...subtask } = this.state;
+    this.taskService.updateTask(id, subtask).catch(() => console.log('task does not exist'));
   }
 
   openSubtask = (subtaskId) => {
@@ -82,7 +87,7 @@ class TaskDetails extends React.Component {
 
     return (
       <Content>
-        <TaskInput name={name} onNameChangeHandler={this.onNameChangeHandler} />
+        <TaskNameInput name={name} onNameChangeHandler={this.onNameChangeHandler} />
         <SectionHeader>overview</SectionHeader>
         <TaskOverview timeSpent={timeSpentAgg} percentageComplete={percentageCompleteAgg} />
         <SectionHeader>subtasks</SectionHeader>
@@ -94,6 +99,7 @@ class TaskDetails extends React.Component {
         <FullWidthButton color="green" onClick={() => history.push(`/tasks/${id}/create`)}>Add Subtask</FullWidthButton>
         <SectionHeader>notes</SectionHeader>
         <TextArea value={notes} onChange={this.onNotesChange} />
+        <SectionHeader>delete task</SectionHeader>
         <FullWidthButton color="red" onClick={() => this.deleteTask()}>Delete Task</FullWidthButton>
       </Content>
     );
