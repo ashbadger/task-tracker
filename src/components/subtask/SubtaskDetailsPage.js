@@ -2,12 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-import TaskInput from '../shared/TaskInput';
+import TaskNameInput from '../shared/TaskNameInput';
 import TextArea from '../shared/TextArea';
 import Timer from '../shared/Timer';
 import Button from '../shared/Button';
-import TaskService from '../services/tasks';
-import { navigateBack } from '../routers/AppRouter';
+import TaskService from '../../services/tasks';
+import { navigateBack } from '../../routers/AppRouter';
 
 const Content = styled.div`
   margin-left: 1.5rem;
@@ -123,7 +123,7 @@ class SubtaskDetails extends React.Component {
 
     return (
       <Content>
-        <TaskInput name={name} onNameChangeHandler={this.onNameChangeHandler} />
+        <TaskNameInput name={name} onNameChangeHandler={this.onNameChangeHandler} />
         <SectionHeader>actions</SectionHeader>
         <ActionsContainer>
           <ItemContainer>

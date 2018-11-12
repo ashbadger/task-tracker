@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import logo from '../assets/images/logo.png';
+import logo from '../../assets/images/logo.png';
 
 const Navigation = styled.div`
   background: rgba(223, 223, 223, 1);

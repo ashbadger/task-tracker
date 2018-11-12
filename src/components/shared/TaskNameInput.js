@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import SectionHeader from './SectionHeader';
 
-const TaskNameInput = styled.input`
+const Input = styled.input`
   background-color: transparent;
   border: transparent;
   border-bottom: solid 1px rgba(0, 0, 0, 1);
@@ -25,17 +25,17 @@ const propTypes = {
   onNameChangeHandler: PropTypes.func.isRequired,
 };
 
-const TaskInput = (props) => {
+const TaskNameInput = (props) => {
   const { name, onNameChangeHandler } = props;
 
   return (
     <React.Fragment>
       <SectionHeader>name</SectionHeader>
-      <TaskNameInput value={name} onChange={onNameChangeHandler} />
+      <Input value={name} onChange={onNameChangeHandler} />
     </React.Fragment>
   );
 };
 
-TaskInput.propTypes = propTypes;
+TaskNameInput.propTypes = propTypes;
 
-export default TaskInput;
+export default TaskNameInput;

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import TaskCreate from '../shared/TaskCreate';
-import TaskService from '../services/tasks';
+import TaskService from '../../services/tasks';
 
 const propTypes = {
   history: PropTypes.shape({}).isRequired,

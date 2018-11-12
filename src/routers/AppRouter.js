@@ -3,12 +3,12 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import styled from 'styled-components';
 
-import TaskDetailsPage from '../task/TaskDetailsPage';
-import SubtaskDetailsPage from '../subtask/SubtaskDetailsPage';
-import TaskListPage from '../task/TaskListPage';
-import BackButton from '../shared/BackButton';
-import TaskCreatePage from '../task/TaskCreatePage';
-import SubtaskCreatePage from '../subtask/SubtaskCreatePage';
+import TaskDetailsPage from '../components/task/TaskDetailsPage';
+import SubtaskDetailsPage from '../components/subtask/SubtaskDetailsPage';
+import TaskListPage from '../components/task/TaskListPage';
+import BackButton from '../components/shared/BackButton';
+import TaskCreatePage from '../components/task/TaskCreatePage';
+import SubtaskCreatePage from '../components/subtask/SubtaskCreatePage';
 
 const Container = styled.div`
   position: relative;
