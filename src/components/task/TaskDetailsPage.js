@@ -14,7 +14,7 @@ import { navigateBack } from '../../routers/AppRouter';
 const Content = styled.div`
   height: -webkit-fill-available;
   margin-left: 1.5rem;
-  overflow: hidden auto;
+  overflow-y: auto;
   padding: 0 1rem;
 `;
 

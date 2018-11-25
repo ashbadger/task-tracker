@@ -13,7 +13,7 @@ const Content = styled.div`
   margin-left: 1.5rem;
   margin-top: 1rem;
   padding: 0 1rem;
-  overflow: hidden auto;
+  overflow-y: auto;
   height: -webkit-fill-available;
 `;
 
