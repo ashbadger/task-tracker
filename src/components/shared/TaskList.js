@@ -6,7 +6,7 @@ import TaskService from '../../services/tasks';
 
 const Tasks = styled.div`
   height: 70vh;
-  overflow: hidden auto;
+  overflow-y: auto;
 `;
 
 class TaskList extends React.Component {
