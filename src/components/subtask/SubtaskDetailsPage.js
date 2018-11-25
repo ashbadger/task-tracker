@@ -110,10 +110,7 @@ class SubtaskDetails extends React.Component {
   deleteSubtask = () => {
     const { match: { params: { id: taskId, subtaskId } }, history } = this.props;
 
-    return this.taskService.deleteSubtask(taskId, subtaskId)
-      .then(() => {
-        navigateBack(history);
-      });
+    return this.taskService.deleteSubtask(taskId, subtaskId).then(() => navigateBack(history));
   }
 
   render() {
