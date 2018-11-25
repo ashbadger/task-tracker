@@ -15,7 +15,8 @@ const Container = styled.div`
   grid-template-areas: 
     'name name name time time'
     'name name name complete complete';
-  height: 4rem;
+  grid-gap: 0 1rem;
+  height: auto;
   margin-bottom: .5rem;
   padding: .5rem;
   transition: background 300ms ease 0s;
@@ -30,10 +31,21 @@ const Container = styled.div`
     font-weight: 600;
     margin-right: .5rem;
   }
+
+  @media screen and (max-width: 767px) {
+    grid-template-areas: 
+      'name name name'
+      'time time time'
+      'complete complete complete';
+  }
 `;
 
 const Name = styled.div`
   grid-area: name;
+  p {
+    font-weight: 600;
+    color: rgba(76,76,76, 1);
+  }
 `;
 
 const TimeSpent = styled.div`
