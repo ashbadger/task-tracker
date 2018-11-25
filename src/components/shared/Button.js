@@ -2,16 +2,16 @@ import styled from 'styled-components';
 
 const colors = {
   red: {
-    background: 'rgba(255, 67, 67, 1)',
-    'border-bottom': 'rgba(195, 0, 0, 1)',
+    background: 'rgb(255, 114, 114)',
+    'border-bottom': 'rgb(197, 21, 21)',
   },
   green: {
     background: 'rgb(126, 166, 126)',
-    'border-bottom': 'rgb(89, 139, 89);',
+    'border-bottom': 'rgb(89, 139, 89)',
   },
   blue: {
-    background: 'rgb(68, 123, 188);',
-    'border-bottom': 'rgb(41, 83, 131);',
+    background: 'rgb(68, 123, 188)',
+    'border-bottom': 'rgb(41, 83, 131)',
   },
 };
 
