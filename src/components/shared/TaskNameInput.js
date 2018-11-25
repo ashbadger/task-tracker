@@ -18,6 +18,10 @@ const Input = styled.input`
     border-bottom-color: rgba(223, 200, 76, 1);
     outline: none;
   }
+
+  @media screen and (max-width: 550px) {
+    font-size: 5vw;
+  }
 `;
 
 const propTypes = {

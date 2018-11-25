@@ -13,6 +13,10 @@ const colors = {
     background: 'rgb(68, 123, 188)',
     'border-bottom': 'rgb(41, 83, 131)',
   },
+  gold: {
+    background: 'rgb(210, 194, 129)',
+    'border-bottom': 'rgb(138, 119, 62)',
+  },
 };
 
 export default styled.button`

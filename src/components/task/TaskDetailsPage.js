@@ -1,7 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
 
-import TaskOverview from './TaskOverviewPage';
+import TaskOverview from '../shared/TaskOverview';
 import TaskService from '../../services/tasks';
 import Task from '../shared/Task';
 import TextArea from '../shared/TextArea';
@@ -9,14 +8,8 @@ import TaskNameInput from '../shared/TaskNameInput';
 import FullWidthButton from '../shared/FullWidthButton';
 import getSubtasksAggs from '../../utils/getSubtasksAggs';
 import SectionHeader from '../shared/SectionHeader';
+import ContentContainer from '../shared/ContentContainer';
 import { navigateBack } from '../../routers/AppRouter';
-
-const Content = styled.div`
-  height: -webkit-fill-available;
-  margin-left: 1.5rem;
-  overflow-y: auto;
-  padding: 0 1rem;
-`;
 
 class TaskDetails extends React.Component {
   constructor(props) {
@@ -87,7 +80,7 @@ class TaskDetails extends React.Component {
     const { history } = this.props;
 
     return (
-      <Content>
+      <ContentContainer>
         <TaskNameInput name={name} onNameChangeHandler={this.onNameChangeHandler} />
         <SectionHeader>overview</SectionHeader>
         <TaskOverview timeSpent={timeSpentAgg} percentageComplete={percentageCompleteAgg} />
@@ -102,7 +95,7 @@ class TaskDetails extends React.Component {
         <TextArea value={notes} onChange={this.onNotesChange} />
         <SectionHeader>delete task</SectionHeader>
         <FullWidthButton color="red" onClick={() => this.deleteTask()}>Delete Task</FullWidthButton>
-      </Content>
+      </ContentContainer>
     );
   }
 }

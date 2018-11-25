@@ -7,15 +7,8 @@ import TextArea from '../shared/TextArea';
 import Timer from '../shared/Timer';
 import Button from '../shared/Button';
 import TaskService from '../../services/tasks';
+import ContentContainer from '../shared/ContentContainer';
 import { navigateBack } from '../../routers/AppRouter';
-
-const Content = styled.div`
-  margin-left: 1.5rem;
-  margin-top: 1rem;
-  padding: 0 1rem;
-  overflow-y: auto;
-  height: -webkit-fill-available;
-`;
 
 const ActionsContainer = styled.div`
   height: auto;
@@ -32,14 +25,21 @@ const ActionsContainer = styled.div`
 
 const ItemContainer = styled.div`
   text-align: center;
+  align-items: center;
   padding: 1rem 2rem;
   border: solid 1px rgba(211, 211, 211, 1);
   border-radius: 5px;
-  margin: 1rem 0;
+  margin: .5rem;
+  flex-grow: 1;
+  min-height: 75px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  min-height: 116px;
+
+  @media screen and (max-width: 767px) {
+    min-height: 60px;
+    margin: .25rem;
+  }
 `;
 
 const SectionHeader = styled.h4`
@@ -119,7 +119,7 @@ class SubtaskDetails extends React.Component {
     } = this.state;
 
     return (
-      <Content>
+      <ContentContainer>
         <TaskNameInput name={name} onNameChangeHandler={this.onNameChangeHandler} />
         <SectionHeader>actions</SectionHeader>
         <ActionsContainer>
@@ -135,7 +135,7 @@ class SubtaskDetails extends React.Component {
             { completed ? (
               <React.Fragment>
                 <small>Undo Complete Subtask</small>
-                <Button color="red" onClick={() => this.updateAndGetSubtask({ completed: false })}>Undo Complete</Button>
+                <Button color="gold" onClick={() => this.updateAndGetSubtask({ completed: false })}>Undo Complete</Button>
               </React.Fragment>
             ) : (
               <React.Fragment>
@@ -151,7 +151,7 @@ class SubtaskDetails extends React.Component {
         </ActionsContainer>
         <SectionHeader>notes</SectionHeader>
         <TextArea value={notes} onChange={this.onNotesChange} />
-      </Content>
+      </ContentContainer>
     );
   }
 }
