@@ -6,7 +6,12 @@ import TaskService from '../../services/tasks';
 
 const Tasks = styled.div`
   height: 70vh;
-  overflow-y: auto;
+  overflow-y: scroll;
+  height: -webkit-fill-available;
+
+  @media screen and (max-width: 767px) {
+    -webkit-overflow-scrolling: touch;
+  }
 `;
 
 class TaskList extends React.Component {
