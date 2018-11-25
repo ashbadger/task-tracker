@@ -9,6 +9,7 @@ import TaskNameInput from '../shared/TaskNameInput';
 import FullWidthButton from '../shared/FullWidthButton';
 import getSubtasksAggs from '../../utils/getSubtasksAggs';
 import SectionHeader from '../shared/SectionHeader';
+import { navigateBack } from '../../routers/AppRouter';
 
 const Content = styled.div`
   height: -webkit-fill-available;
@@ -24,7 +25,7 @@ class TaskDetails extends React.Component {
     this.state = {
       id,
       name: '',
-      subtasks: [{}],
+      subtasks: [],
       notes: '',
       percentageCompleteAgg: 0,
       timeSpentAgg: 0,
@@ -66,7 +67,7 @@ class TaskDetails extends React.Component {
     const { id } = this.state;
     const { history } = this.props;
 
-    this.taskService.deleteTask(id).then(() => history.push('/tasks'));
+    this.taskService.deleteTask(id).then(() => navigateBack(history));
   }
 
   onNameChangeHandler = (e) => {
