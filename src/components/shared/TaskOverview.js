@@ -16,6 +16,7 @@ const Container = styled.div`
   justify-content: space-evenly;
   margin-bottom: .5rem;
   padding: .5rem;
+  text-align: center;
 `;
 
 const propTypes = {
