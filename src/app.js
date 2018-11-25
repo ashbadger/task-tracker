@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import { injectGlobal } from 'styled-components';
 
 import { AppRouter } from './routers/AppRouter';
-import Navbar from './shared/Navbar';
-import Card from './shared/Card';
+import Navbar from './components/shared/Navbar';
+import Card from './components/shared/Card';
 import background from './assets/images/background.png';
 
 injectGlobal`
