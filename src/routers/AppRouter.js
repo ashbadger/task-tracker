@@ -34,7 +34,7 @@ class AppRouter extends React.Component {
           render={({ location, history }) => {
             const { pathname, key, navigateToPrevious = false } = location;
             return (
-              <div>
+              <React.Fragment>
                 {
                   !this.isRootRoute(pathname)
                   && <BackButton history={history} location={location} />
@@ -57,7 +57,7 @@ class AppRouter extends React.Component {
                     </CSSTransition>
                   </TransitionGroup>
                 </Container>
-              </div>
+              </React.Fragment>
             );
           }}
         />

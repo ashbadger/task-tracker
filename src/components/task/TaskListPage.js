@@ -6,7 +6,18 @@ import TaskList from '../shared/TaskList';
 import FullWidthButton from '../shared/FullWidthButton';
 
 const Container = styled.div`
-  margin: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  height: -webkit-fill-available;
+`;
+
+const List = styled.div`
+  display: flex;
+  margin-bottom: 1rem;
+`;
+
+const Button = styled.div`
+  height: 3rem;
 `;
 
 const propTypes = {
@@ -17,12 +28,10 @@ const TaskListPage = (props) => {
   const { history } = props;
 
   return (
-    <div>
-      <TaskList history={history} />
-      <Container>
-        <FullWidthButton color="green" onClick={() => history.push('/tasks/create')}>Add Task</FullWidthButton>
-      </Container>
-    </div>
+    <Container>
+      <List><TaskList history={history} /></List>
+      <Button><FullWidthButton color="green" onClick={() => history.push('/tasks/create')}>Add Task</FullWidthButton></Button>
+    </Container>
   );
 };
 
