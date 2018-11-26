@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { injectGlobal } from 'styled-components';
+import styled, { injectGlobal } from 'styled-components';
 
 import { AppRouter } from './routers/AppRouter';
 import Navbar from './components/shared/Navbar';
@@ -57,12 +57,20 @@ injectGlobal`
   };
 `;
 
+const Page = styled.div`
+  height: 90vh;
+  position: relative;
+  margin: 1rem;
+`;
+
 const App = () => (
   <div>
     <Navbar />
-    <Card>
-      <AppRouter />
-    </Card>
+    <Page>
+      <Card>
+        <AppRouter />
+      </Card>
+    </Page>
   </div>
 );
 

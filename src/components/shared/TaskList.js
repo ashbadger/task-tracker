@@ -5,8 +5,12 @@ import Task from './Task';
 import TaskService from '../../services/tasks';
 
 const Tasks = styled.div`
-  height: 70vh;
-  overflow-y: auto;
+  overflow-y: scroll;
+  width: -webkit-fill-available;
+
+  @media screen and (max-width: 767px) {
+    -webkit-overflow-scrolling: touch;
+  }
 `;
 
 class TaskList extends React.Component {
@@ -27,6 +31,7 @@ class TaskList extends React.Component {
 
   render() {
     const { tasks } = this.state;
+
     return (
       <Tasks>
         {tasks.map(task => (

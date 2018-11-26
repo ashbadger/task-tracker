@@ -8,6 +8,12 @@ import FullWidthButton from './FullWidthButton';
 
 const Container = styled.div`
   margin: 1rem 0;
+  overflow-y: scroll;
+  height: -webkit-fill-available;
+
+  @media screen and (max-width: 767px) {
+    -webkit-overflow-scrolling: touch;
+  }
 `;
 
 class TaskCreate extends React.Component {

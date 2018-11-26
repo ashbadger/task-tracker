@@ -37,6 +37,7 @@ const Container = styled.div`
       'name name name'
       'time time time'
       'complete complete complete';
+    p { margin: .5rem 0; }
   }
 `;
 

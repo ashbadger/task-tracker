@@ -8,6 +8,10 @@ const Navigation = styled.div`
   border-bottom: 3px solid rgba(124, 124, 124, 1);
   height: 50px;
   padding: .5rem;
+
+  @media screen and (max-height: 767px) {
+    height: 25px;
+  }
 `;
 
 const Logo = styled.a`
