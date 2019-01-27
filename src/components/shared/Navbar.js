@@ -18,6 +18,11 @@ const Logo = styled.a`
   &, img {
     height: inherit;
   }
+
+  img:hover {
+    transform: scale(1.1);
+    transition: all 400ms cubic-bezier(0.42, 0, 0, 3.29) 0s;
+  }
 `;
 
 const Navbar = () => (
