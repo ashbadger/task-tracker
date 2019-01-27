@@ -9,7 +9,7 @@ const Navigation = styled.div`
   height: 50px;
   padding: .5rem;
 
-  @media screen and (max-height: 767px) {
+  @media screen and (max-height: 450px) {
     height: 25px;
   }
 `;
