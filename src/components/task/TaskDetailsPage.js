@@ -35,9 +35,8 @@ class TaskDetails extends React.Component {
     });
   }
 
-  componentWillUnmount() {
-    const { id, ...subtask } = this.state;
-    this.taskService.updateTask(id, subtask).catch(() => console.log('task does not exist'));
+  async componentWillUnmount() {
+    await this.saveTask();
   }
 
   openSubtask = (subtaskId) => {
@@ -45,6 +44,11 @@ class TaskDetails extends React.Component {
     const { id } = this.state;
 
     history.push(`/tasks/${id}/${subtaskId}`);
+  }
+
+  saveTask = () => {
+    const { id, ...subtask } = this.state;
+    this.taskService.updateTask(id, subtask).catch(() => console.log('task does not exist'));
   }
 
   createSubtask = async (subtask) => {
@@ -68,6 +72,10 @@ class TaskDetails extends React.Component {
     this.setState(() => ({ name }));
   }
 
+  onMouseLeaveHandler = async () => {
+    await this.saveTask();
+  }
+
   onNotesChange = (e) => {
     const notes = e.target.value;
     this.setState(() => ({ notes }));
@@ -81,7 +89,11 @@ class TaskDetails extends React.Component {
 
     return (
       <ContentContainer>
-        <TaskNameInput name={name} onNameChangeHandler={this.onNameChangeHandler} />
+        <TaskNameInput
+          name={name}
+          onNameChangeHandler={this.onNameChangeHandler}
+          onMouseLeaveHandler={this.onMouseLeaveHandler}
+        />
         <SectionHeader>overview</SectionHeader>
         <TaskOverview timeSpent={timeSpentAgg} percentageComplete={percentageCompleteAgg} />
         <SectionHeader>subtasks</SectionHeader>

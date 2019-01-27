@@ -102,6 +102,11 @@ class SubtaskDetails extends React.Component {
     this.setState(() => ({ name }));
   }
 
+  onMouseLeaveHandler = () => {
+    const { ...subtask } = this.state;
+    return this.updateSubtask(subtask).catch(() => console.log('task does not exist'));
+  }
+
   onNotesChange = (e) => {
     const notes = e.target.value;
     this.setState(() => ({ notes }));
@@ -109,7 +114,6 @@ class SubtaskDetails extends React.Component {
 
   deleteSubtask = () => {
     const { match: { params: { id: taskId, subtaskId } }, history } = this.props;
-
     return this.taskService.deleteSubtask(taskId, subtaskId).then(() => navigateBack(history));
   }
 
@@ -120,7 +124,11 @@ class SubtaskDetails extends React.Component {
 
     return (
       <ContentContainer>
-        <TaskNameInput name={name} onNameChangeHandler={this.onNameChangeHandler} />
+        <TaskNameInput
+          name={name}
+          onNameChangeHandler={this.onNameChangeHandler}
+          onMouseLeaveHandler={this.onMouseLeaveHandler}
+        />
         <SectionHeader>actions</SectionHeader>
         <ActionsContainer>
           <ItemContainer>
