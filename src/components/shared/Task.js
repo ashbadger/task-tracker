@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import prettyMS from 'pretty-ms';
 import PropTypes from 'prop-types';
+import { CSSTransition } from 'react-transition-group';
 
 import getSubtasksAggs from '../../utils/getSubtasksAggs';
 
@@ -19,7 +20,7 @@ const Container = styled.div`
   height: auto;
   margin-bottom: .5rem;
   padding: .5rem;
-  transition: background 300ms ease 0s;
+  transition: background 400ms ease 0s;
 
   &:hover {
     background: rgba(235, 235, 235, 1);
@@ -30,6 +31,17 @@ const Container = styled.div`
     color: rgba(103, 113, 125, 1);
     font-weight: 600;
     margin-right: .5rem;
+  }
+
+  &.task-enter {
+    opacity: 0.01;
+    transform: translateY(-5%);
+  }
+
+  &.task-enter-active {
+    opacity: 1;
+    transform: translateY(0%);
+    transition: all 500ms ease-out;
   }
 
   @media screen and (max-width: 767px) {
@@ -90,6 +102,8 @@ class Task extends React.Component {
       const aggregates = getSubtasksAggs(subtasks);
       this.setState(() => (aggregates));
     }
+
+    this.setState(() => ({ active: true }));
   }
 
   render() {
@@ -100,32 +114,35 @@ class Task extends React.Component {
     const {
       percentageCompleteAgg,
       timeSpentAgg,
+      active,
     } = this.state;
 
     return (
-      <Container>
-        <Name>
-          <small className="heading">Name</small>
-          <p>{name}</p>
-        </Name>
-        <TimeSpent>
-          <small className="heading">Time Spent </small>
-          <small>{prettyMS(timeSpentAgg || timeSpent || 0)}</small>
-        </TimeSpent>
-        <Complete>
-          <div>
-            <small className="heading">Complete</small>
-            {isSubtask ? (
-              <small>{completed ? 'Yes' : 'No'}</small>
-            ) : (
-              <small>
-                {percentageCompleteAgg}
-                %
-              </small>
-            )}
-          </div>
-        </Complete>
-      </Container>
+      <CSSTransition in={active} classNames="task" timeout={{ enter: 600, exit: 50 }}>
+        <Container className="task">
+          <Name>
+            <small className="heading">Name</small>
+            <p>{name}</p>
+          </Name>
+          <TimeSpent>
+            <small className="heading">Time Spent </small>
+            <small>{prettyMS(timeSpentAgg || timeSpent || 0)}</small>
+          </TimeSpent>
+          <Complete>
+            <div>
+              <small className="heading">Complete</small>
+              {isSubtask ? (
+                <small>{completed ? 'Yes' : 'No'}</small>
+              ) : (
+                <small>
+                  {percentageCompleteAgg}
+                  %
+                </small>
+              )}
+            </div>
+          </Complete>
+        </Container>
+      </CSSTransition>
     );
   }
 }

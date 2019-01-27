@@ -4,6 +4,10 @@ import styled from 'styled-components';
 import Task from './Task';
 import TaskService from '../../services/tasks';
 
+const Container = styled.div`
+  height: -webkit-fill-available;
+`;
+
 const Tasks = styled.div`
   overflow-y: scroll;
   width: -webkit-fill-available;
@@ -16,7 +20,7 @@ const Tasks = styled.div`
 class TaskList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { tasks: [] };
+    this.state = {};
     this.taskService = new TaskService();
   }
 
@@ -32,14 +36,16 @@ class TaskList extends React.Component {
   render() {
     const { tasks } = this.state;
 
-    return (
-      <Tasks>
-        {tasks.map(task => (
-          <div onClick={() => this.openTask(task.id)}>
-            <Task {...task} key={task.id} />
-          </div>
-        ))}
-      </Tasks>
+    return (tasks
+      ? (
+        <Tasks>
+          {tasks.map(task => (
+            <div onClick={() => this.openTask(task.id)}>
+              <Task {...task} key={task.id} />
+            </div>
+          ))}
+        </Tasks>)
+      : (<Container />)
     );
   }
 }
