@@ -5,7 +5,6 @@ import styled, { injectGlobal } from 'styled-components';
 import { AppRouter } from './routers/AppRouter';
 import Navbar from './components/shared/Navbar';
 import Card from './components/shared/Card';
-import background from '../public/images/background.png';
 
 injectGlobal`
   body {
