@@ -1,48 +1,29 @@
 import styled from 'styled-components';
 
 const colors = {
-  red: {
-    background: 'rgb(255, 114, 114)',
-    'border-bottom': 'rgb(197, 21, 21)',
-  },
-  green: {
-    background: 'rgb(126, 166, 126)',
-    'border-bottom': 'rgb(89, 139, 89)',
-  },
-  blue: {
-    background: 'rgb(68, 123, 188)',
-    'border-bottom': 'rgb(41, 83, 131)',
-  },
-  gold: {
-    background: 'rgb(210, 194, 129)',
-    'border-bottom': 'rgb(138, 119, 62)',
-  },
+  red: 'rgb(255, 114, 114)',
+  default: 'rgb(0, 134, 208);',
+  blue: 'rgb(68, 123, 188)',
+  gold: 'rgb(210, 194, 129)',
 };
 
 export default styled.button`
-  background: ${props => colors[props.color].background};
-  border-bottom: solid 3px ${props => colors[props.color]['border-bottom']};
+  background: none;
   border-radius: 5px;
-  color: rgba(255, 255, 255, 1);
+  color: ${props => colors[props.color]};
+  border: 2px solid ${props => colors[props.color]};
   font-size: small;
-  font-weight: 600;
+  font-weight: 500;
   padding: 8px 18px;
   text-transform: uppercase;
+  transition: background 400ms ease 0s;
 
   &:hover {
     cursor: pointer;
-    transform: translateY(-1px);
-    margin-bottom: -1px;
-    border-bottom-width: 4px;
+    background: rgb(239, 237, 237);
   }
 
   &:focus {
     outline: none;
-  }
-
-  &:active {
-    border-bottom: solid 2px ${props => colors[props.color]['border-bottom']};
-    transform: translateY(1px);
-    margin-bottom: 1px;
   }
 `;

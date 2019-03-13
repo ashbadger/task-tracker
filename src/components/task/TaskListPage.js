@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import TaskList from '../shared/TaskList';
-import FullWidthButton from '../shared/FullWidthButton';
+import Button from '../shared/Button';
 
 const Container = styled.div`
   display: flex;
@@ -16,8 +16,11 @@ const List = styled.div`
   margin-bottom: 1rem;
 `;
 
-const Button = styled.div`
-  height: 3rem;
+const ButtonContainer = styled.div`
+  display: flex;
+  margin-bottom: 1rem;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const propTypes = {
@@ -29,8 +32,11 @@ const TaskListPage = (props) => {
 
   return (
     <Container>
+      <ButtonContainer>
+        <b>task tracker</b>
+        <Button color="default" onClick={() => history.push('/tasks/create')}>Create New Task</Button>
+      </ButtonContainer>
       <List><TaskList history={history} /></List>
-      <Button><FullWidthButton color="green" onClick={() => history.push('/tasks/create')}>Add Task</FullWidthButton></Button>
     </Container>
   );
 };

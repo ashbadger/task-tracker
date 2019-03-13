@@ -6,9 +6,8 @@ import PropTypes from 'prop-types';
 import Button from './Button';
 
 const TimerBox = styled.p`
-  border: ${props => (props.started ? 'solid 2px rgba(13, 128, 13, 1);' : 'solid 1px transparent;')};
+  border: ${props => `solid ${props.started ? '2px' : '1px'} rgb(195, 195, 195);`};
   border-radius: 5px;
-  box-shadow: 1px 1px 1px rgba(128, 128, 128, 1);
   padding: 6px;
   width: 150px;
 `;

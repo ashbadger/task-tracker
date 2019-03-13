@@ -13,7 +13,6 @@ injectGlobal`
     overflow: hidden;
     height: 100%;
     font-family: 'Roboto';
-    background-image: url(${background});
   }
 
   [class*='page-exit'], 

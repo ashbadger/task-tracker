@@ -1,15 +1,23 @@
 import React from 'react';
+import styled from 'styled-components';
 
 import TaskOverview from '../shared/TaskOverview';
 import TaskService from '../../services/tasks';
 import Task from '../shared/Task';
 import TextArea from '../shared/TextArea';
 import TaskNameInput from '../shared/TaskNameInput';
+import Button from '../shared/Button';
 import FullWidthButton from '../shared/FullWidthButton';
 import getSubtasksAggs from '../../utils/getSubtasksAggs';
 import SectionHeader from '../shared/SectionHeader';
 import ContentContainer from '../shared/ContentContainer';
 import { navigateBack } from '../../routers/AppRouter';
+
+const SectionHeaderContainer = styled.div`
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+`;
 
 class TaskDetails extends React.Component {
   constructor(props) {
@@ -96,16 +104,17 @@ class TaskDetails extends React.Component {
         />
         <SectionHeader>overview</SectionHeader>
         <TaskOverview timeSpent={timeSpentAgg} percentageComplete={percentageCompleteAgg} />
-        <SectionHeader>subtasks</SectionHeader>
+        <SectionHeaderContainer>
+          <SectionHeader>subtasks</SectionHeader>
+          <Button color="default" onClick={() => history.push(`/tasks/${id}/create`)}>Create New Subtask</Button>
+        </SectionHeaderContainer>
         {subtasks.map(subtask => (
           <div onClick={() => this.openSubtask(subtask.id)}>
             <Task {...subtask} isSubtask key={subtask.id} />
           </div>
         ))}
-        <FullWidthButton color="green" onClick={() => history.push(`/tasks/${id}/create`)}>Add Subtask</FullWidthButton>
         <SectionHeader>notes</SectionHeader>
         <TextArea value={notes} onChange={this.onNotesChange} />
-        <SectionHeader>delete task</SectionHeader>
         <FullWidthButton color="red" onClick={() => this.deleteTask()}>Delete Task</FullWidthButton>
       </ContentContainer>
     );

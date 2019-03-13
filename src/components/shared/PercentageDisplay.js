@@ -22,7 +22,7 @@ const ProgressBar = styled.div`
 
   border-radius: 5px;
   height: inherit;
-  background: rgb(126, 166, 126);
+  background: rgb(15, 154, 14);
   position: absolute;
   animation: bar-animation 1s 0s ease 1 forwards;
   width: ${props => props.width}%;

@@ -1,9 +1,8 @@
 import styled from 'styled-components';
 
 export default styled.div`
-  background: rgba(245, 245, 245, 1);
-  box-shadow: 1px 1px 10px rgba(192, 192, 192, 1);
-  border-radius: 4px;
+  border: 2px solid rgb(103, 103, 103);
+  border-radius: 6px;
   width: calc(60vw + 50px);
   position: absolute;
   left: 0;

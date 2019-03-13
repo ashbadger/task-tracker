@@ -44,7 +44,7 @@ class TaskCreate extends React.Component {
         <SectionHeader>notes</SectionHeader>
         <TextArea value={notes} onChange={this.onNotesChange} />
         <Container>
-          <FullWidthButton color="green" onClick={() => saveHandler({ ...this.state })}>Create Task</FullWidthButton>
+          <FullWidthButton color="default" onClick={() => saveHandler({ ...this.state })}>Create Task</FullWidthButton>
         </Container>
       </div>
     );
