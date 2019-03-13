@@ -4,8 +4,7 @@ import styled from 'styled-components';
 import logo from '../../../public/images/logo.png';
 
 const Navigation = styled.div`
-  background: rgba(223, 223, 223, 1);
-  border-bottom: 3px solid rgba(124, 124, 124, 1);
+  background: rgb(0, 122, 236);
   height: 50px;
   padding: .5rem;
 

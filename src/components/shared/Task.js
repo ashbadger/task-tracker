@@ -7,10 +7,8 @@ import { CSSTransition } from 'react-transition-group';
 import getSubtasksAggs from '../../utils/getSubtasksAggs';
 
 const Container = styled.div`
-  background: rgba(252, 252, 252, 1);
-  border: solid .5px rgba(191, 191, 191, 1);
+  border: solid 2px rgb(154, 154, 154);
   border-radius: 5px;
-  box-shadow: 2px 2px 2px rgba(211, 211, 211, 1);
   display: grid;
   grid-auto-columns: 1fr;
   grid-template-areas: 
@@ -21,9 +19,9 @@ const Container = styled.div`
   margin-bottom: .5rem;
   padding: .5rem;
   transition: background 400ms ease 0s;
-
+  
   &:hover {
-    background: rgba(235, 235, 235, 1);
+    background: rgb(249, 249, 249);
     cursor: pointer;
   };
 

@@ -6,7 +6,6 @@ const Container = styled.div`
   background: rgba(210, 210, 210, 1);
   border: solid .5px rgba(197, 197, 197, 1);
   border-radius: 5px;
-  box-shadow: 1px 0px 5px rgba(172, 172, 172, 1);
   height: 30px;
   margin-top: 10px;
   position: relative;
@@ -22,7 +21,7 @@ const ProgressBar = styled.div`
 
   border-radius: 5px;
   height: inherit;
-  background: rgb(126, 166, 126);
+  background: rgb(15, 154, 14);
   position: absolute;
   animation: bar-animation 1s 0s ease 1 forwards;
   width: ${props => props.width}%;

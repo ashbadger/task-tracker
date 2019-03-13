@@ -6,10 +6,8 @@ import PropTypes from 'prop-types';
 import PercentageDisplay from './PercentageDisplay';
 
 const Container = styled.div`
-  background: rgba(252, 252, 252, 1);
-  border: solid .5px rgba(191, 191, 191, 1);
+  border: solid 1px rgb(222, 222, 222);
   border-radius: .5rem;
-  box-shadow: 2px 2px 2px rgba(211, 211, 211, 1);
   display: flex;
   flex-wrap: wrap;
   height: auto;

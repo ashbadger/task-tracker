@@ -1,20 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import Switch from 'react-switch';
 
 import TaskNameInput from '../shared/TaskNameInput';
 import TextArea from '../shared/TextArea';
 import Timer from '../shared/Timer';
-import Button from '../shared/Button';
+import FullWidthButton from '../shared/FullWidthButton';
 import TaskService from '../../services/tasks';
 import ContentContainer from '../shared/ContentContainer';
 import { navigateBack } from '../../routers/AppRouter';
 
 const ActionsContainer = styled.div`
   height: auto;
-  background: rgba(252, 252, 252, 1);
-  box-shadow: 2px 2px 2px rgba(211, 211, 211, 1);
-  border: solid .5px rgba(191, 191, 191, 1);
+  border: solid 2px rgb(226, 226, 226);
   border-radius: 5px;
   padding: .5rem;
   margin-bottom: .5rem;
@@ -140,25 +139,18 @@ class SubtaskDetails extends React.Component {
             />
           </ItemContainer>
           <ItemContainer>
-            { completed ? (
-              <React.Fragment>
-                <small>Undo Complete Subtask</small>
-                <Button color="gold" onClick={() => this.updateAndGetSubtask({ completed: false })}>Undo Complete</Button>
-              </React.Fragment>
-            ) : (
-              <React.Fragment>
-                <small>Complete Subtask</small>
-                <Button color="green" onClick={() => this.updateAndGetSubtask({ completed: true })}>Complete</Button>
-              </React.Fragment>
-            )}
-          </ItemContainer>
-          <ItemContainer>
-            <small>Delete Subtask</small>
-            <Button color="red" onClick={() => this.deleteSubtask()}>delete</Button>
+            <React.Fragment>
+              <small>Subtask is Complete?</small>
+              <Switch
+                onChange={() => this.updateAndGetSubtask({ completed: !completed })}
+                checked={completed}
+              />
+            </React.Fragment>
           </ItemContainer>
         </ActionsContainer>
         <SectionHeader>notes</SectionHeader>
         <TextArea value={notes} onChange={this.onNotesChange} />
+        <FullWidthButton color="red" onClick={() => this.deleteTask()}>Delete Task</FullWidthButton>
       </ContentContainer>
     );
   }
