@@ -142,7 +142,7 @@ class SubtaskDetails extends React.Component {
             <React.Fragment>
               <small>Subtask is Complete?</small>
               <Switch
-                onChange={() => this.updateAndGetSubtask({ completed: !completed })}
+                onChange={() => this.updateAndGetSubtask({ ...this.state, completed: !completed })}
                 checked={completed}
               />
             </React.Fragment>
