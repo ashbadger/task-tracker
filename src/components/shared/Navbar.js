@@ -5,11 +5,11 @@ import logo from '../../../public/images/logo.png';
 
 const Navigation = styled.div`
   background: rgb(0, 122, 236);
-  height: 50px;
+  height: 3rem;
   padding: .5rem;
 
-  @media screen and (max-height: 450px) {
-    height: 25px;
+  @media screen and (max-width: 768px) {
+    height: 2rem;
   }
 `;
 
