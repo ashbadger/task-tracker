@@ -10,12 +10,12 @@ const propTypes = {
 };
 
 const BackButton = ({ history }) => {
+  const isSubtaskPage = history.location.pathname.match(/\/tasks\/((?!create).).*\/((?!create).).*/g);
   const isTaskPage = history.location.pathname.match(/\/tasks\/((?!create).)*$/g);
-  const isSubtaskPage = history.location.pathname.match(/\/tasks\/((?!create).)*$\/((?!create).)*$/g);
   let buttonText;
 
-  if (isTaskPage) buttonText = 'All Tasks';
-  else if (isSubtaskPage) buttonText = 'Back to Task';
+  if (isSubtaskPage) buttonText = 'Back to Task';
+  else if (isTaskPage) buttonText = 'All Tasks';
   else buttonText = 'Undo';
 
   return (
