@@ -9,7 +9,6 @@ const Container = styled.div`
 `;
 
 const Tasks = styled.div`
-  overflow-y: scroll;
   width: -webkit-fill-available;
 
   @media screen and (max-width: 767px) {

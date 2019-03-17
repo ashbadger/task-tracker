@@ -13,6 +13,7 @@ const Container = styled.div`
 
 const List = styled.div`
   display: flex;
+  overflow-y: scroll;
   margin-bottom: 1rem;
 `;
 
