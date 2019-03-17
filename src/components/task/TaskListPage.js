@@ -15,6 +15,10 @@ const List = styled.div`
   display: flex;
   overflow-y: scroll;
   margin-bottom: 1rem;
+
+  @media screen and (max-width: 767px) {
+    -webkit-overflow-scrolling: touch;
+  }
 `;
 
 const ButtonContainer = styled.div`

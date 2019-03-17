@@ -10,10 +10,6 @@ const Container = styled.div`
 
 const Tasks = styled.div`
   width: -webkit-fill-available;
-
-  @media screen and (max-width: 767px) {
-    -webkit-overflow-scrolling: touch;
-  }
 `;
 
 class TaskList extends React.Component {
