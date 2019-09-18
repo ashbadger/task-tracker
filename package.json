@@ -1,7 +1,7 @@
 {
   "name": "task-tracker",
   "version": "1.0.0",
-  "description": "",
+  "description": "track your tasks' tasks",
   "main": "./src/app.js",
   "scripts": {
     "start": "node server/server.js",
@@ -11,7 +11,7 @@
     "build:prod": "webpack --mode production",
     "heroku-postbuild": "npm run build:prod"
   },
-  "author": "",
+  "author": "ashbadger",
   "license": "ISC",
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "^7.5.5",
