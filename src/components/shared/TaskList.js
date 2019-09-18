@@ -39,7 +39,8 @@ class TaskList extends React.Component {
               <Task {...task} key={task.id} />
             </div>
           ))}
-        </Tasks>)
+        </Tasks>
+      )
       : (<Container />)
     );
   }

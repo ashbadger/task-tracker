@@ -17,8 +17,8 @@ injectGlobal`
   [class*='page-exit'], 
   [class*='page-enter'], 
   [class*='page--prev'] {
-    position: absolute;
     width: -webkit-fill-available;
+    height: 100%;
   }
 
   .page-enter {

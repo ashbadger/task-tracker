@@ -1,7 +1,7 @@
 import db from '../firebase/firebase';
 
 export default class TaskService {
-  createTask = (task) => {
+  createTask = async (task) => {
     return db.collection('tasks').add(task)
       .then(documentRef => documentRef.get())
       .then(docSnapshot => ({ id: docSnapshot.id, ...docSnapshot.data() }));
@@ -24,35 +24,35 @@ export default class TaskService {
     return { ...task, subtasks };
   };
 
-  updateTask = (id, updates) => {
+  updateTask = async (id, updates) => {
     return db.collection('tasks').doc(id).update(updates);
   };
 
-  deleteTask = (id) => {
+  deleteTask = async (id) => {
     return db.collection('tasks').doc(id).delete();
   };
 
-  createSubtask = (taskId, subtask) => {
+  createSubtask = async (taskId, subtask) => {
     return db.collection(`tasks/${taskId}/subtasks`).add(subtask)
       .then(task => task.get())
       .then(task => ({ id: task.id, ...task.data() }));
   };
 
-  getSubtasks = (taskId) => {
+  getSubtasks = async (taskId) => {
     return db.collection(`tasks/${taskId}/subtasks`).get()
       .then(querySnapshot => querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
   };
 
-  getSubtask = (taskId, subtaskId) => {
+  getSubtask = async (taskId, subtaskId) => {
     return db.collection(`tasks/${taskId}/subtasks`).doc(subtaskId).get()
       .then(task => task.data());
   };
 
-  updateSubtask = (taskId, subtaskId, updates) => {
+  updateSubtask = async (taskId, subtaskId, updates) => {
     return db.collection(`tasks/${taskId}/subtasks`).doc(subtaskId).update(updates);
   };
 
-  deleteSubtask = (taskId, subtaskId) => {
+  deleteSubtask = async (taskId, subtaskId) => {
     return db.collection(`tasks/${taskId}/subtasks`).doc(subtaskId).delete();
   };
 }

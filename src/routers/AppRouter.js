@@ -12,6 +12,7 @@ import SubtaskCreatePage from '../components/subtask/SubtaskCreatePage';
 
 const Container = styled.div`
   position: relative;
+  height: 100%;
 `;
 
 const navigateBack = (history) => {
@@ -40,7 +41,7 @@ class AppRouter extends React.Component {
                   && <BackButton history={history} location={location} />
                 }
                 <Container>
-                  <TransitionGroup>
+                  <TransitionGroup style={{ height: '100%' }}>
                     <CSSTransition
                       key={key}
                       classNames={navigateToPrevious ? 'page--prev' : 'page'}
