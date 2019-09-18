@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 import TaskOverview from '../shared/TaskOverview';
 import TaskService from '../../services/tasks';
@@ -11,18 +12,27 @@ import FullWidthButton from '../shared/FullWidthButton';
 import getSubtasksAggs from '../../utils/getSubtasksAggs';
 import SectionHeader from '../shared/SectionHeader';
 import ContentContainer from '../shared/ContentContainer';
-import { navigateBack } from '../../routers/AppRouter';
+import navigateBack from '../../utils/navigateBack';
 
 const SectionHeaderContainer = styled.div`
-  display:flex;
+  display: flex;
   justify-content: space-between;
   align-items: center;
 `;
 
+const propTypes = {
+  history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
+  match: PropTypes.shape({ params: PropTypes.string }).isRequired,
+};
+
 class TaskDetails extends React.Component {
   constructor(props) {
     super(props);
-    const { match: { params: { id } } } = this.props;
+    const {
+      match: {
+        params: { id },
+      },
+    } = this.props;
     this.state = {
       id,
       name: '',
@@ -37,61 +47,68 @@ class TaskDetails extends React.Component {
 
   componentDidMount() {
     const { id } = this.state;
-    this.taskService.getTask(id).then((task) => {
+    this.taskService.getTask(id).then(task => {
       const aggregates = getSubtasksAggs(task.subtasks);
       this.setState({ ...task, ...aggregates });
     });
   }
 
   async componentWillUnmount() {
-    await this.saveTask();
+    this.saveTask();
   }
 
-  openSubtask = (subtaskId) => {
+  openSubtask = subtaskId => {
     const { history } = this.props;
     const { id } = this.state;
 
     history.push(`/tasks/${id}/${subtaskId}`);
-  }
+  };
 
   saveTask = () => {
     const { id, ...subtask } = this.state;
-    this.taskService.updateTask(id, subtask).catch(() => console.log('task does not exist'));
-  }
+    this.taskService
+      .updateTask(id, subtask)
+      .catch(() => new Error('task does not exist'));
+  };
 
-  createSubtask = async (subtask) => {
+  createSubtask = async subtask => {
     const { id } = this.state;
     const subtaskDocument = await this.taskService.createSubtask(id, subtask);
-    this.setState((prevState) => {
+    this.setState(prevState => {
       const { subtasks } = prevState;
       return { subtasks: [...subtasks, subtaskDocument] };
     });
-  }
+  };
 
   deleteTask = () => {
     const { id } = this.state;
     const { history } = this.props;
 
     this.taskService.deleteTask(id).then(() => navigateBack(history));
-  }
+  };
 
-  onNameChangeHandler = (e) => {
+  onNameChangeHandler = e => {
     const name = e.target.value;
     this.setState(() => ({ name }));
-  }
+  };
 
   onMouseLeaveHandler = async () => {
-    await this.saveTask();
-  }
+    this.saveTask();
+  };
 
-  onNotesChange = (e) => {
+  onNotesChange = e => {
     const notes = e.target.value;
     this.setState(() => ({ notes }));
-  }
+  };
 
   render() {
     const {
-      id, name, subtasks, notes, percentageCompleteAgg, timeSpentAgg,
+      id,
+      name,
+      subtasks,
+      notes,
+      percentageCompleteAgg,
+      timeSpentAgg,
     } = this.state;
     const { history } = this.props;
 
@@ -103,10 +120,18 @@ class TaskDetails extends React.Component {
           onMouseLeaveHandler={this.onMouseLeaveHandler}
         />
         <SectionHeader>overview</SectionHeader>
-        <TaskOverview timeSpent={timeSpentAgg} percentageComplete={percentageCompleteAgg} />
+        <TaskOverview
+          timeSpent={timeSpentAgg}
+          percentageComplete={percentageCompleteAgg}
+        />
         <SectionHeaderContainer>
           <SectionHeader>subtasks</SectionHeader>
-          <Button color="default" onClick={() => history.push(`/tasks/${id}/create`)}>Create New Subtask</Button>
+          <Button
+            color="default"
+            onClick={() => history.push(`/tasks/${id}/create`)}
+          >
+            Create New Subtask
+          </Button>
         </SectionHeaderContainer>
         {subtasks.map(subtask => (
           <div onClick={() => this.openSubtask(subtask.id)}>
@@ -115,10 +140,14 @@ class TaskDetails extends React.Component {
         ))}
         <SectionHeader>notes</SectionHeader>
         <TextArea value={notes} onChange={this.onNotesChange} />
-        <FullWidthButton color="red" onClick={() => this.deleteTask()}>Delete Task</FullWidthButton>
+        <FullWidthButton color="red" onClick={() => this.deleteTask()}>
+          Delete Task
+        </FullWidthButton>
       </ContentContainer>
     );
   }
 }
+
+TaskDetails.propTypes = propTypes;
 
 export default TaskDetails;

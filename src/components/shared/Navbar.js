@@ -6,7 +6,7 @@ import logo from '../../../public/images/logo.png';
 const Navigation = styled.div`
   background: rgb(0, 122, 236);
   height: 3rem;
-  padding: .5rem;
+  padding: 0.5rem;
 
   @media screen and (max-width: 768px) {
     height: 2rem;
@@ -14,7 +14,8 @@ const Navigation = styled.div`
 `;
 
 const Logo = styled.a`
-  &, img {
+  &,
+  img {
     height: inherit;
   }
 

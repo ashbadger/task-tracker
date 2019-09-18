@@ -1,35 +1,32 @@
 module.exports = {
-  "env": {
-    "browser": true,
+  env: {
+    browser: true,
   },
-  "extends": [ 
-      "airbnb",
-    ],
-  "parser": "babel-eslint",
-  "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
+  extends: ['airbnb', 'plugin:prettier/recommended', 'prettier/react'],
+  parser: 'babel-eslint',
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
     },
-    "ecmaVersion": 8,
-    "sourceType": "module"
+    ecmaVersion: 8,
+    sourceType: 'module',
   },
-  "plugins": [
-    "react"
+  plugins: ['react', 'prettier'],
+  rules: {
+    'prettier/prettier': ['error', { singleQuote: true, trailingComma: true }],
+    'no-unused-vars': [
+      'error',
+      {
+        vars: 'local',
+        args: 'none',
+      },
     ],
-    "rules": {
-      "no-unused-vars": [
-        "error",
-        {
-          "vars": "local",
-          "args": "none",
-        }
-      ],
-      "react/jsx-filename-extension": 0,
-      "no-unused-expressions": [
-        "error",
-        {
-          "allowTaggedTemplates": true
-        },
-      ]
-    }
+    'react/jsx-filename-extension': 0,
+    'no-unused-expressions': [
+      'error',
+      {
+        allowTaggedTemplates: true,
+      },
+    ],
+  },
 };

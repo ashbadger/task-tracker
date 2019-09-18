@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const TextArea = styled.textarea`
   border: 1px solid rgb(222, 222, 222);
-  border-radius: .5rem;
+  border-radius: 0.5rem;
   box-sizing: border-box;
   font-family: 'Roboto';
   font-size: small;

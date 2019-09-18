@@ -11,24 +11,24 @@ const Container = styled.div`
   border-radius: 5px;
   display: grid;
   grid-auto-columns: 1fr;
-  grid-template-areas: 
+  grid-template-areas:
     'name name name time time'
     'name name name complete complete';
   grid-gap: 0 1rem;
   height: auto;
-  margin-bottom: .5rem;
-  padding: .5rem;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
   transition: background 400ms ease 0s;
-  
+
   &:hover {
     background: rgb(249, 249, 249);
     cursor: pointer;
-  };
+  }
 
   small.heading {
     color: rgba(103, 113, 125, 1);
     font-weight: 600;
-    margin-right: .5rem;
+    margin-right: 0.5rem;
   }
 
   &.task-enter {
@@ -43,11 +43,13 @@ const Container = styled.div`
   }
 
   @media screen and (max-width: 767px) {
-    grid-template-areas: 
+    grid-template-areas:
       'name name name'
       'time time time'
       'complete complete complete';
-    p { margin: .5rem 0; }
+    p {
+      margin: 0.5rem 0;
+    }
   }
 `;
 
@@ -55,7 +57,7 @@ const Name = styled.div`
   grid-area: name;
   p {
     font-weight: 600;
-    color: rgba(76,76,76, 1);
+    color: rgba(76, 76, 76, 1);
   }
 `;
 
@@ -98,22 +100,16 @@ class Task extends React.Component {
 
     if (isTask) {
       const aggregates = getSubtasksAggs(subtasks);
-      this.setState(() => (aggregates));
+      this.setState(() => aggregates);
     }
 
     this.setState(() => ({ active: true }));
   }
 
   render() {
-    const {
-      name, completed, isSubtask, timeSpent,
-    } = this.props;
+    const { name, completed, isSubtask, timeSpent } = this.props;
 
-    const {
-      percentageCompleteAgg,
-      timeSpentAgg,
-      active,
-    } = this.state;
+    const { percentageCompleteAgg, timeSpentAgg, active } = this.state;
 
     return (
       <CSSTransition in={active} classNames="task" timeout={{ enter: 600, exit: 50 }}>
@@ -129,14 +125,7 @@ class Task extends React.Component {
           <Complete>
             <div>
               <small className="heading">Complete</small>
-              {isSubtask ? (
-                <small>{completed ? 'Yes' : 'No'}</small>
-              ) : (
-                <small>
-                  {percentageCompleteAgg}
-                  %
-                </small>
-              )}
+              {isSubtask ? <small>{completed ? 'Yes' : 'No'}</small> : <small>{percentageCompleteAgg}%</small>}
             </div>
           </Complete>
         </Container>

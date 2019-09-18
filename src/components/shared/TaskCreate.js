@@ -25,26 +25,34 @@ class TaskCreate extends React.Component {
     };
   }
 
-  onNameChangeHandler = (e) => {
+  onNameChangeHandler = e => {
     const name = e.target.value;
     this.setState(() => ({ name }));
-  }
+  };
 
-  onNotesChange = (e) => {
+  onNotesChange = e => {
     const notes = e.target.value;
     this.setState(() => ({ notes }));
-  }
+  };
 
   render() {
     const { name, notes } = this.state;
     const { saveHandler } = this.props;
     return (
       <div>
-        <TaskNameInput name={name} onNameChangeHandler={this.onNameChangeHandler} />
+        <TaskNameInput
+          name={name}
+          onNameChangeHandler={this.onNameChangeHandler}
+        />
         <SectionHeader>notes</SectionHeader>
         <TextArea value={notes} onChange={this.onNotesChange} />
         <Container>
-          <FullWidthButton color="default" onClick={() => saveHandler({ ...this.state })}>Create Task</FullWidthButton>
+          <FullWidthButton
+            color="default"
+            onClick={() => saveHandler({ ...this.state })}
+          >
+            Create Task
+          </FullWidthButton>
         </Container>
       </div>
     );

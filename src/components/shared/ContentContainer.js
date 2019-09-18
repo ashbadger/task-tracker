@@ -8,7 +8,7 @@ export default styled.div`
 
   @media screen and (max-width: 767px) {
     margin-left: 0;
-    padding: 0 .5rem;
+    padding: 0 0.5rem;
     -webkit-overflow-scrolling: touch;
   }
 `;

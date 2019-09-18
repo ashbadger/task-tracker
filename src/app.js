@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import styled, { createGlobalStyle } from 'styled-components';
 
-import { AppRouter } from './routers/AppRouter';
+import AppRouter from './routers/AppRouter';
 import Navbar from './components/shared/Navbar';
 import Card from './components/shared/Card';
 
@@ -72,6 +72,5 @@ const App = () => (
     </Page>
   </div>
 );
-
 
 ReactDOM.render(<App />, document.getElementById('app'));

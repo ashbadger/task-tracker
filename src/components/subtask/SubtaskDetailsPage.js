@@ -9,14 +9,14 @@ import Timer from '../shared/Timer';
 import FullWidthButton from '../shared/FullWidthButton';
 import TaskService from '../../services/tasks';
 import ContentContainer from '../shared/ContentContainer';
-import { navigateBack } from '../../routers/AppRouter';
+import navigateBack from '../../utils/navigateBack';
 
 const ActionsContainer = styled.div`
   height: auto;
   border: solid 2px rgb(226, 226, 226);
   border-radius: 5px;
-  padding: .5rem;
-  margin-bottom: .5rem;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
   display: flex;
   justify-content: space-evenly;
   flex-wrap: wrap;
@@ -28,7 +28,7 @@ const ItemContainer = styled.div`
   padding: 1rem 2rem;
   border: solid 1px rgba(211, 211, 211, 1);
   border-radius: 5px;
-  margin: .5rem;
+  margin: 0.5rem;
   flex-grow: 1;
   min-height: 75px;
   display: flex;
@@ -37,7 +37,7 @@ const ItemContainer = styled.div`
 
   @media screen and (max-width: 767px) {
     min-height: 60px;
-    margin: .25rem;
+    margin: 0.25rem;
   }
 `;
 
@@ -48,7 +48,7 @@ const SectionHeader = styled.h4`
 
 const propTypes = {
   history: PropTypes.shape({}).isRequired,
-  match: PropTypes.shape({}).isRequired,
+  match: PropTypes.shape({ params: { id: PropTypes.string } }).isRequired,
 };
 
 class SubtaskDetails extends React.Component {
@@ -72,54 +72,70 @@ class SubtaskDetails extends React.Component {
     this.updateSubtask(subtask).catch(() => console.log('task does not exist'));
   }
 
-  updateTimeSpentHandler = (time) => {
+  updateTimeSpentHandler = time => {
     this.setState(() => ({ timeSpent: time }));
-  }
+  };
 
   watchTimerStopHandler = () => {
     const { ...subtask } = this.state;
     this.updateSubtask(subtask);
-  }
+  };
 
   getSubtask = () => {
-    const { match: { params: { id: taskId, subtaskId } } } = this.props;
-    this.taskService.getSubtask(taskId, subtaskId)
+    const {
+      match: {
+        params: { id: taskId, subtaskId },
+      },
+    } = this.props;
+    this.taskService
+      .getSubtask(taskId, subtaskId)
       .then(subtask => this.setState(() => ({ ...subtask })));
-  }
+  };
 
-  updateAndGetSubtask = (updates) => {
+  updateAndGetSubtask = updates => {
     this.updateSubtask(updates).then(() => this.getSubtask());
-  }
+  };
 
-  updateSubtask = (updates) => {
-    const { match: { params: { id: taskId, subtaskId } } } = this.props;
+  updateSubtask = updates => {
+    const {
+      match: {
+        params: { id: taskId, subtaskId },
+      },
+    } = this.props;
     return this.taskService.updateSubtask(taskId, subtaskId, updates);
-  }
+  };
 
-  onNameChangeHandler = (e) => {
+  onNameChangeHandler = e => {
     const name = e.target.value;
     this.setState(() => ({ name }));
-  }
+  };
 
   onMouseLeaveHandler = () => {
     const { ...subtask } = this.state;
-    return this.updateSubtask(subtask).catch(() => console.log('task does not exist'));
-  }
+    return this.updateSubtask(subtask).catch(() =>
+      console.log('task does not exist')
+    );
+  };
 
-  onNotesChange = (e) => {
+  onNotesChange = e => {
     const notes = e.target.value;
     this.setState(() => ({ notes }));
-  }
+  };
 
   deleteSubtask = () => {
-    const { match: { params: { id: taskId, subtaskId } }, history } = this.props;
-    return this.taskService.deleteSubtask(taskId, subtaskId).then(() => navigateBack(history));
-  }
+    const {
+      match: {
+        params: { id: taskId, subtaskId },
+      },
+      history,
+    } = this.props;
+    return this.taskService
+      .deleteSubtask(taskId, subtaskId)
+      .then(() => navigateBack(history));
+  };
 
   render() {
-    const {
-      timeSpent, name, notes, completed,
-    } = this.state;
+    const { timeSpent, name, notes, completed } = this.state;
 
     return (
       <ContentContainer>
@@ -139,18 +155,25 @@ class SubtaskDetails extends React.Component {
             />
           </ItemContainer>
           <ItemContainer>
-            <React.Fragment>
+            <>
               <small>Subtask is Complete?</small>
               <Switch
-                onChange={() => this.updateAndGetSubtask({ ...this.state, completed: !completed })}
+                onChange={() =>
+                  this.updateAndGetSubtask({
+                    ...this.state,
+                    completed: !completed,
+                  })
+                }
                 checked={completed}
               />
-            </React.Fragment>
+            </>
           </ItemContainer>
         </ActionsContainer>
         <SectionHeader>notes</SectionHeader>
         <TextArea value={notes} onChange={this.onNotesChange} />
-        <FullWidthButton color="red" onClick={() => this.deleteSubtask()}>Delete Task</FullWidthButton>
+        <FullWidthButton color="red" onClick={() => this.deleteSubtask()}>
+          Delete Task
+        </FullWidthButton>
       </ContentContainer>
     );
   }

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 const Container = styled.div`
   background: rgba(210, 210, 210, 1);
-  border: solid .5px rgba(197, 197, 197, 1);
+  border: solid 0.5px rgba(197, 197, 197, 1);
   border-radius: 5px;
   height: 30px;
   margin-top: 10px;
@@ -33,21 +33,19 @@ const ProgressText = styled.small`
   position: inherit;
   top: 5px;
   font-weight: 700;
-  color: ${props => (props.percentage > 60 ? 'white' : 'rgba(19, 19, 19, 0.8)')};
+  color: ${props =>
+    props.percentage > 60 ? 'white' : 'rgba(19, 19, 19, 0.8)'};
 `;
 
 const propTypes = {
   percentage: PropTypes.number.isRequired,
 };
 
-const PercentageDisplay = (props) => {
+const PercentageDisplay = props => {
   const { percentage } = props;
   return (
     <Container>
-      <ProgressText percentage={percentage}>
-        {percentage}
-        %
-      </ProgressText>
+      <ProgressText percentage={percentage}>{percentage}%</ProgressText>
       <ProgressBar width={percentage} />
     </Container>
   );

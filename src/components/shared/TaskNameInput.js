@@ -30,14 +30,18 @@ const propTypes = {
   onMouseLeaveHandler: PropTypes.func.isRequired,
 };
 
-const TaskNameInput = (props) => {
+const TaskNameInput = props => {
   const { name, onNameChangeHandler, onMouseLeaveHandler } = props;
 
   return (
-    <React.Fragment>
+    <>
       <SectionHeader>name</SectionHeader>
-      <Input value={name} onChange={onNameChangeHandler} onMouseLeave={onMouseLeaveHandler} />
-    </React.Fragment>
+      <Input
+        value={name}
+        onChange={onNameChangeHandler}
+        onMouseLeave={onMouseLeaveHandler}
+      />
+    </>
   );
 };
 

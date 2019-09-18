@@ -6,7 +6,8 @@ import PropTypes from 'prop-types';
 import Button from './Button';
 
 const TimerBox = styled.p`
-  border: ${props => `solid ${props.started ? '2px' : '1px'} rgb(195, 195, 195);`};
+  border: ${props =>
+    `solid ${props.started ? '2px' : '1px'} rgb(195, 195, 195);`};
   border-radius: 5px;
   padding: 6px;
   width: 150px;
@@ -57,11 +58,15 @@ class Timer extends React.Component {
     return (
       <div>
         <TimerBox started={started}>{prettyMS(time)}</TimerBox>
-        {
-          started
-            ? <Button color="red" onClick={this.stopTimeIncrement}>stop</Button>
-            : <Button color="blue" onClick={this.incrementTimeBySecond}>start</Button>
-        }
+        {started ? (
+          <Button color="red" onClick={this.stopTimeIncrement}>
+            stop
+          </Button>
+        ) : (
+          <Button color="blue" onClick={this.incrementTimeBySecond}>
+            start
+          </Button>
+        )}
       </div>
     );
   }

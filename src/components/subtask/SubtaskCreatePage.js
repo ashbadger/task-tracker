@@ -5,8 +5,8 @@ import TaskCreate from '../shared/TaskCreate';
 import TaskService from '../../services/tasks';
 
 const propTypes = {
-  history: PropTypes.shape({}).isRequired,
-  match: PropTypes.shape({}).isRequired,
+  history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
+  match: PropTypes.shape({ params: { id: PropTypes.string } }).isRequired,
 };
 
 class SubtaskCreatePage extends React.Component {
@@ -15,8 +15,12 @@ class SubtaskCreatePage extends React.Component {
     this.taskService = new TaskService();
   }
 
-  saveSubtaskHandler = (subtask) => {
-    const { match: { params: { id: taskId } } } = this.props;
+  saveSubtaskHandler = subtask => {
+    const {
+      match: {
+        params: { id: taskId },
+      },
+    } = this.props;
     const defaultSubtask = {
       timeSpent: 0,
       completed: false,
@@ -24,16 +28,16 @@ class SubtaskCreatePage extends React.Component {
       notes: '',
     };
 
-    this.taskService.createSubtask(taskId, { ...defaultSubtask, ...subtask }).then((res) => {
-      const { history } = this.props;
-      history.push(`/tasks/${taskId}/${res.id}`);
-    });
+    this.taskService
+      .createSubtask(taskId, { ...defaultSubtask, ...subtask })
+      .then(res => {
+        const { history } = this.props;
+        history.push(`/tasks/${taskId}/${res.id}`);
+      });
   };
 
   render() {
-    return (
-      <TaskCreate saveHandler={this.saveSubtaskHandler} />
-    );
+    return <TaskCreate saveHandler={this.saveSubtaskHandler} />;
   }
 }
 

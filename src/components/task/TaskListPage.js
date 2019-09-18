@@ -29,19 +29,23 @@ const ButtonContainer = styled.div`
 `;
 
 const propTypes = {
-  history: PropTypes.shape({}).isRequired,
+  history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
 };
 
-const TaskListPage = (props) => {
+const TaskListPage = props => {
   const { history } = props;
 
   return (
     <Container>
       <ButtonContainer>
         <b>task tracker</b>
-        <Button color="default" onClick={() => history.push('/tasks/create')}>Create New Task</Button>
+        <Button color="default" onClick={() => history.push('/tasks/create')}>
+          Create New Task
+        </Button>
       </ButtonContainer>
-      <List><TaskList history={history} /></List>
+      <List>
+        <TaskList history={history} />
+      </List>
     </Container>
   );
 };

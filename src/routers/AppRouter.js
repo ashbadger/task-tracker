@@ -15,18 +15,11 @@ const Container = styled.div`
   height: 100%;
 `;
 
-const navigateBack = (history) => {
-  const location = {
-    pathname: history.location.pathname.split('/').slice(0, -1).join('/'),
-    navigateToPrevious: true,
-  };
-  history.push(location);
-};
-
 class AppRouter extends React.Component {
   stripSlashes = string => string.replace('/', '');
 
-  isRootRoute = pathname => ['', 'tasks'].includes(this.stripSlashes(pathname).trim());
+  isRootRoute = pathname =>
+    ['', 'tasks'].includes(this.stripSlashes(pathname).trim());
 
   render() {
     return (
@@ -35,11 +28,10 @@ class AppRouter extends React.Component {
           render={({ location, history }) => {
             const { pathname, key, navigateToPrevious = false } = location;
             return (
-              <React.Fragment>
-                {
-                  !this.isRootRoute(pathname)
-                  && <BackButton history={history} location={location} />
-                }
+              <>
+                {!this.isRootRoute(pathname) && (
+                  <BackButton history={history} location={location} />
+                )}
                 <Container>
                   <TransitionGroup style={{ height: '100%' }}>
                     <CSSTransition
@@ -50,15 +42,30 @@ class AppRouter extends React.Component {
                       <Switch location={location}>
                         <Route exact path="/" component={TaskListPage} />
                         <Route exact path="/tasks" component={TaskListPage} />
-                        <Route exact path="/tasks/create" component={TaskCreatePage} />
-                        <Route exact path="/tasks/:id/create" component={SubtaskCreatePage} />
-                        <Route exact path="/tasks/:id" component={TaskDetailsPage} />
-                        <Route path="/tasks/:id/:subtaskId" component={SubtaskDetailsPage} />
+                        <Route
+                          exact
+                          path="/tasks/create"
+                          component={TaskCreatePage}
+                        />
+                        <Route
+                          exact
+                          path="/tasks/:id/create"
+                          component={SubtaskCreatePage}
+                        />
+                        <Route
+                          exact
+                          path="/tasks/:id"
+                          component={TaskDetailsPage}
+                        />
+                        <Route
+                          path="/tasks/:id/:subtaskId"
+                          component={SubtaskDetailsPage}
+                        />
                       </Switch>
                     </CSSTransition>
                   </TransitionGroup>
                 </Container>
-              </React.Fragment>
+              </>
             );
           }}
         />
@@ -67,4 +74,4 @@ class AppRouter extends React.Component {
   }
 }
 
-export { navigateBack, AppRouter };
+export default AppRouter;

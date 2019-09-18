@@ -7,13 +7,13 @@ import PercentageDisplay from './PercentageDisplay';
 
 const Container = styled.div`
   border: solid 1px rgb(222, 222, 222);
-  border-radius: .5rem;
+  border-radius: 0.5rem;
   display: flex;
   flex-wrap: wrap;
   height: auto;
   justify-content: space-evenly;
-  margin-bottom: .5rem;
-  padding: .5rem;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
   text-align: center;
 `;
 
@@ -22,7 +22,7 @@ const propTypes = {
   percentageComplete: PropTypes.number.isRequired,
 };
 
-const TaskOverview = (props) => {
+const TaskOverview = props => {
   const { timeSpent, percentageComplete } = props;
 
   return (
