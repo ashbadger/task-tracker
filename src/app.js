@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import styled, { injectGlobal } from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 
 import { AppRouter } from './routers/AppRouter';
 import Navbar from './components/shared/Navbar';
 import Card from './components/shared/Card';
 
-injectGlobal`
+const GlobalStyles = createGlobalStyle`
   body {
     margin: 0px;
     overflow: hidden;
@@ -63,6 +63,7 @@ const Page = styled.div`
 
 const App = () => (
   <div>
+    <GlobalStyles />
     <Navbar />
     <Page>
       <Card>

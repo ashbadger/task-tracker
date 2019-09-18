@@ -150,7 +150,7 @@ class SubtaskDetails extends React.Component {
         </ActionsContainer>
         <SectionHeader>notes</SectionHeader>
         <TextArea value={notes} onChange={this.onNotesChange} />
-        <FullWidthButton color="red" onClick={() => this.deleteTask()}>Delete Task</FullWidthButton>
+        <FullWidthButton color="red" onClick={() => this.deleteSubtask()}>Delete Task</FullWidthButton>
       </ContentContainer>
     );
   }
