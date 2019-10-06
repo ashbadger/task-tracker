@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 import TaskNameInput from './TaskNameInput';
 import TextArea from './TextArea';
@@ -15,6 +16,10 @@ const Container = styled.div`
     -webkit-overflow-scrolling: touch;
   }
 `;
+
+const propTypes = {
+  saveHandler: PropTypes.func.isRequired,
+};
 
 class TaskCreate extends React.Component {
   constructor(props) {
@@ -38,18 +43,24 @@ class TaskCreate extends React.Component {
   render() {
     const { name, notes } = this.state;
     const { saveHandler } = this.props;
+
     return (
       <div>
         <TaskNameInput
           name={name}
+          aria-label="name"
           onNameChangeHandler={this.onNameChangeHandler}
         />
         <SectionHeader>notes</SectionHeader>
-        <TextArea value={notes} onChange={this.onNotesChange} />
+        <TextArea
+          aria-label="notes"
+          value={notes}
+          onChange={this.onNotesChange}
+        />
         <Container>
           <FullWidthButton
             color="default"
-            onClick={() => saveHandler({ ...this.state })}
+            onClick={() => saveHandler({ name, notes })}
           >
             Create Task
           </FullWidthButton>
@@ -58,5 +69,7 @@ class TaskCreate extends React.Component {
     );
   }
 }
+
+TaskCreate.propTypes = propTypes;
 
 export default TaskCreate;

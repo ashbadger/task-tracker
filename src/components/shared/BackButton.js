@@ -1,11 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from './Button';
+import { createBrowserHistory } from 'history';
 
+import Button from './Button';
 import navigateBack from '../../utils/navigateBack';
 
 const propTypes = {
-  history: PropTypes.isRequired,
+  history: PropTypes.shape(History),
+};
+
+const defaultProps = {
+  history: createBrowserHistory(),
 };
 
 const BackButton = ({ history }) => {
@@ -25,5 +30,6 @@ const BackButton = ({ history }) => {
 };
 
 BackButton.propTypes = propTypes;
+BackButton.defaultProps = defaultProps;
 
 export default BackButton;

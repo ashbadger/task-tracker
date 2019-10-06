@@ -29,7 +29,7 @@ const ButtonContainer = styled.div`
 `;
 
 const propTypes = {
-  history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
+  history: PropTypes.shape(History).isRequired,
 };
 
 const TaskListPage = props => {

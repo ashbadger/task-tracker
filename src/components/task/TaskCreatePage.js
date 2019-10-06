@@ -5,7 +5,7 @@ import TaskCreate from '../shared/TaskCreate';
 import TaskService from '../../services/tasks';
 
 const propTypes = {
-  history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
+  history: PropTypes.shape(History).isRequired,
 };
 
 class TaskCreatePage extends React.Component {

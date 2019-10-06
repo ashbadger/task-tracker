@@ -89,7 +89,7 @@ class Task extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      percentageCompleteAgg: 0,
+      percentageCompletedAgg: 0,
       timeSpentAgg: 0,
     };
   }
@@ -106,26 +106,47 @@ class Task extends React.Component {
     this.setState(() => ({ active: true }));
   }
 
-  render() {
-    const { name, completed, isSubtask, timeSpent } = this.props;
+  getSubtaskCompletedText() {
+    const { completed } = this.props;
+    return completed ? 'Yes' : 'No';
+  }
 
-    const { percentageCompleteAgg, timeSpentAgg, active } = this.state;
+  getTaskCompletedText() {
+    const { percentageCompletedAgg } = this.state;
+    return `${percentageCompletedAgg}%`;
+  }
+
+  render() {
+    const { name, isSubtask, timeSpent } = this.props;
+    const { timeSpentAgg, active } = this.state;
 
     return (
-      <CSSTransition in={active} classNames="task" timeout={{ enter: 600, exit: 50 }}>
-        <Container className="task">
+      <CSSTransition
+        in={active}
+        classNames="task"
+        timeout={{ enter: 600, exit: 50 }}
+      >
+        <Container className="task" data-testid="task">
           <Name>
             <small className="heading">Name</small>
-            <p>{name}</p>
+            <p className="name" data-testid="name">
+              {name}
+            </p>
           </Name>
           <TimeSpent>
-            <small className="heading">Time Spent </small>
-            <small>{prettyMS(timeSpentAgg || timeSpent || 0)}</small>
+            <small className="heading">Time Spent</small>
+            <small className="time-spent" data-testid="time-spent">
+              {prettyMS(timeSpentAgg || timeSpent || 0)}
+            </small>
           </TimeSpent>
           <Complete>
             <div>
-              <small className="heading">Complete</small>
-              {isSubtask ? <small>{completed ? 'Yes' : 'No'}</small> : <small>{percentageCompleteAgg}%</small>}
+              <small className="heading">Completed</small>
+              <small className="completed" data-testid="completed">
+                {isSubtask
+                  ? this.getSubtaskCompletedText()
+                  : this.getTaskCompletedText()}
+              </small>
             </div>
           </Complete>
         </Container>

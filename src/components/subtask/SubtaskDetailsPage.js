@@ -47,8 +47,13 @@ const SectionHeader = styled.h4`
 `;
 
 const propTypes = {
-  history: PropTypes.shape({}).isRequired,
-  match: PropTypes.shape({ params: { id: PropTypes.string } }).isRequired,
+  history: PropTypes.shape(History).isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string,
+      subtaskId: PropTypes.string,
+    }),
+  }).isRequired,
 };
 
 class SubtaskDetails extends React.Component {
@@ -69,7 +74,7 @@ class SubtaskDetails extends React.Component {
 
   componentWillUnmount() {
     const { ...subtask } = this.state;
-    this.updateSubtask(subtask).catch(() => console.log('task does not exist'));
+    this.updateSubtask(subtask).catch(() => new Error('task does not exist'));
   }
 
   updateTimeSpentHandler = time => {
@@ -87,6 +92,7 @@ class SubtaskDetails extends React.Component {
         params: { id: taskId, subtaskId },
       },
     } = this.props;
+
     this.taskService
       .getSubtask(taskId, subtaskId)
       .then(subtask => this.setState(() => ({ ...subtask })));
@@ -112,8 +118,8 @@ class SubtaskDetails extends React.Component {
 
   onMouseLeaveHandler = () => {
     const { ...subtask } = this.state;
-    return this.updateSubtask(subtask).catch(() =>
-      console.log('task does not exist')
+    return this.updateSubtask(subtask).catch(
+      () => new Error('task does not exist')
     );
   };
 

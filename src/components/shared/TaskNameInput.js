@@ -27,7 +27,11 @@ const Input = styled.input`
 const propTypes = {
   name: PropTypes.string.isRequired,
   onNameChangeHandler: PropTypes.func.isRequired,
-  onMouseLeaveHandler: PropTypes.func.isRequired,
+  onMouseLeaveHandler: PropTypes.func,
+};
+
+const defaultProps = {
+  onMouseLeaveHandler: null,
 };
 
 const TaskNameInput = props => {
@@ -38,6 +42,7 @@ const TaskNameInput = props => {
       <SectionHeader>name</SectionHeader>
       <Input
         value={name}
+        aria-label="name"
         onChange={onNameChangeHandler}
         onMouseLeave={onMouseLeaveHandler}
       />
@@ -46,5 +51,6 @@ const TaskNameInput = props => {
 };
 
 TaskNameInput.propTypes = propTypes;
+TaskNameInput.defaultProps = defaultProps;
 
 export default TaskNameInput;

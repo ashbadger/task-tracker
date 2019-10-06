@@ -21,8 +21,9 @@ const SectionHeaderContainer = styled.div`
 `;
 
 const propTypes = {
-  history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
-  match: PropTypes.shape({ params: PropTypes.string }).isRequired,
+  history: PropTypes.shape(History).isRequired,
+  match: PropTypes.shape({ params: PropTypes.shape({ id: PropTypes.string }) })
+    .isRequired,
 };
 
 class TaskDetails extends React.Component {
@@ -38,7 +39,7 @@ class TaskDetails extends React.Component {
       name: '',
       subtasks: [],
       notes: '',
-      percentageCompleteAgg: 0,
+      percentageCompletedAgg: 0,
       timeSpentAgg: 0,
     };
 
@@ -107,7 +108,7 @@ class TaskDetails extends React.Component {
       name,
       subtasks,
       notes,
-      percentageCompleteAgg,
+      percentageCompletedAgg,
       timeSpentAgg,
     } = this.state;
     const { history } = this.props;
@@ -122,7 +123,7 @@ class TaskDetails extends React.Component {
         <SectionHeader>overview</SectionHeader>
         <TaskOverview
           timeSpent={timeSpentAgg}
-          percentageComplete={percentageCompleteAgg}
+          percentageCompleted={percentageCompletedAgg}
         />
         <SectionHeaderContainer>
           <SectionHeader>subtasks</SectionHeader>
@@ -133,9 +134,20 @@ class TaskDetails extends React.Component {
             Create New Subtask
           </Button>
         </SectionHeaderContainer>
-        {subtasks.map(subtask => (
-          <div onClick={() => this.openSubtask(subtask.id)}>
-            <Task {...subtask} isSubtask key={subtask.id} />
+        {subtasks.map((subtask, index) => (
+          <div
+            onClick={() => this.openSubtask(subtask.id)}
+            onKeyDown={() => this.openSubtask(subtask.id)}
+            role="button"
+            tabIndex={0}
+            key={index}
+          >
+            <Task
+              name={subtask.name}
+              completed={subtask.completed}
+              timeSpent={subtask.timeSpent}
+              isSubtask
+            />
           </div>
         ))}
         <SectionHeader>notes</SectionHeader>

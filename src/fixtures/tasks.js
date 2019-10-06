@@ -7,12 +7,12 @@ export default [
       {
         name: 'create task detail component',
         timeSpent: 100000000,
-        complete: true,
+        completed: true,
       },
       {
         name: 'create task detail component',
         timeSpent: 10000000,
-        complete: false,
+        completed: false,
       },
     ],
   },
@@ -23,12 +23,12 @@ export default [
       {
         name: 'finish chapter 1',
         timeSpent: 100000000,
-        complete: true,
+        completed: true,
       },
       {
         name: 'finish chapter 2',
         timeSpent: 10000000,
-        complete: false,
+        completed: false,
       },
     ],
     timeSpent: 800,
@@ -41,12 +41,12 @@ export default [
       {
         name: 'create task detail component',
         timeSpent: 100000000,
-        complete: false,
+        completed: false,
       },
       {
         name: 'create task detail component',
         timeSpent: 10000000,
-        complete: false,
+        completed: false,
       },
     ],
   },
@@ -58,12 +58,12 @@ export default [
       {
         name: 'create task detail component',
         timeSpent: 100000000,
-        complete: true,
+        completed: true,
       },
       {
         name: 'create task detail component',
         timeSpent: 10000000,
-        complete: false,
+        completed: false,
       },
     ],
   },
@@ -75,12 +75,12 @@ export default [
       {
         name: 'create task detail component',
         timeSpent: 100000000,
-        complete: true,
+        completed: true,
       },
       {
         name: 'create task detail component',
         timeSpent: 10000000,
-        complete: false,
+        completed: false,
       },
     ],
   },

@@ -14,7 +14,7 @@ const Tasks = styled.div`
 `;
 
 const propTypes = {
-  history: PropTypes.isRequired,
+  history: PropTypes.shape(History).isRequired,
 };
 
 class TaskList extends React.Component {
@@ -24,8 +24,9 @@ class TaskList extends React.Component {
     this.taskService = new TaskService();
   }
 
-  componentDidMount() {
-    this.taskService.getTasks().then(tasks => this.setState({ tasks }));
+  async componentDidMount() {
+    const tasks = await this.taskService.getTasks();
+    this.setState({ tasks });
   }
 
   openTask = id => {
@@ -37,10 +38,20 @@ class TaskList extends React.Component {
     const { tasks } = this.state;
 
     return tasks ? (
-      <Tasks>
+      <Tasks data-testid="task-list">
         {tasks.map(task => (
-          <div onClick={() => this.openTask(task.id)}>
-            <Task {...task} key={task.id} />
+          <div
+            role="button"
+            tabIndex={0}
+            onClick={() => this.openTask(task.id)}
+            onKeyDown={() => this.openTask(task.id)}
+            key={task.id}
+          >
+            <Task
+              name={task.name}
+              completed={task.completed}
+              subtasks={task.subtasks}
+            />
           </div>
         ))}
       </Tasks>

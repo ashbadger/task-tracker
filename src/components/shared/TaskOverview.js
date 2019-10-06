@@ -19,11 +19,11 @@ const Container = styled.div`
 
 const propTypes = {
   timeSpent: PropTypes.number.isRequired,
-  percentageComplete: PropTypes.number.isRequired,
+  percentageCompleted: PropTypes.number.isRequired,
 };
 
 const TaskOverview = props => {
-  const { timeSpent, percentageComplete } = props;
+  const { timeSpent, percentageCompleted } = props;
 
   return (
     <Container>
@@ -32,8 +32,8 @@ const TaskOverview = props => {
         <p>{prettyMS(timeSpent)}</p>
       </div>
       <div>
-        <small>Total Percentage Complete</small>
-        <PercentageDisplay percentage={percentageComplete} />
+        <small>Total Percentage Completed</small>
+        <PercentageDisplay percentage={percentageCompleted} />
       </div>
     </Container>
   );

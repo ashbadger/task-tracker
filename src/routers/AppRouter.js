@@ -40,13 +40,15 @@ class AppRouter extends React.Component {
                       timeout={800}
                     >
                       <Switch location={location}>
-                        <Route exact path="/" component={TaskListPage} />
-                        <Route exact path="/tasks" component={TaskListPage} />
-                        <Route
-                          exact
-                          path="/tasks/create"
-                          component={TaskCreatePage}
-                        />
+                        <Route exact path="/">
+                          <TaskListPage history={history} />
+                        </Route>
+                        <Route exact path="/tasks">
+                          <TaskListPage history={history} />
+                        </Route>
+                        <Route exact path="/tasks/create">
+                          <TaskCreatePage history={history} />
+                        </Route>
                         <Route
                           exact
                           path="/tasks/:id/create"

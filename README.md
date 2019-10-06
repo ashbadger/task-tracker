@@ -7,8 +7,14 @@ task tracker helps you track the time you spend on completing tasks through subt
 ## Run 
 
 ```
-npm i
-npm run dev-server
+$ npm i
+$ npm run dev-server
+```
+
+## Test
+
+```
+$ npm run test
 ```
 
 ## Technologies
@@ -16,5 +22,7 @@ npm run dev-server
 - react
 - react-router
 - firebase
+- jest
+- react-testing-library
 - babel
 - heroku
