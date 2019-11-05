@@ -11,38 +11,40 @@ import AppRouter from '../routers/AppRouter';
 
 jest.mock('../services/tasks');
 
-afterEach(() => {
-  cleanup();
-  /* fetch global history object
-   * navigate back to home page */
-  const history = createBrowserHistory();
+let history = createBrowserHistory();
+
+beforeEach(() => {
+  /* reset global history object */
+  history = createBrowserHistory();
   history.push('/');
 });
 
+afterEach(() => {
+  cleanup();
+});
+
 it(`should navigate to task's details page when task is clicked`, async () => {
-  const history = createBrowserHistory();
-  history.push('/tasks');
-  const { getAllByTestId, getByText } = render(<AppRouter history={history} />);
+  const { getAllByTestId, getByText } = render(<AppRouter />);
 
   const taskNode = await waitForElement(() => getAllByTestId('task')[0]);
 
+  /* route to task details page */
   fireEvent.click(taskNode);
 
-  /* route to task details page */
   const allTasksButtonNode = await waitForElement(() => getByText('All Tasks'));
   expect(allTasksButtonNode).toBeDefined();
 });
 
 it('should navigate to create task page on create new task button click', async () => {
-  const { getByText } = render(<AppRouter history={createBrowserHistory()} />);
+  const { getByText } = render(<AppRouter />);
 
   const createTaskButtonNode = await waitForElement(() =>
     getByText('Create New Task')
   );
 
+  /* route to create task page */
   fireEvent.click(createTaskButtonNode);
 
-  /* route to create task page */
   const undoButtonNode = await waitForElement(() => getByText('Undo'));
   expect(undoButtonNode).toBeDefined();
 });

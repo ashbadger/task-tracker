@@ -1,6 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
 
 import TaskList from '../shared/TaskList';
 import Button from '../shared/Button';
@@ -28,12 +28,8 @@ const ButtonContainer = styled.div`
   align-items: center;
 `;
 
-const propTypes = {
-  history: PropTypes.shape(History).isRequired,
-};
-
-const TaskListPage = props => {
-  const { history } = props;
+const TaskListPage = () => {
+  const history = useHistory();
 
   return (
     <Container>
@@ -44,12 +40,10 @@ const TaskListPage = props => {
         </Button>
       </ButtonContainer>
       <List>
-        <TaskList history={history} />
+        <TaskList />
       </List>
     </Container>
   );
 };
-
-TaskListPage.propTypes = propTypes;
 
 export default TaskListPage;

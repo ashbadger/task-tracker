@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 import Switch from 'react-switch';
+import { useHistory, useParams } from 'react-router-dom';
 
 import TaskNameInput from '../shared/TaskNameInput';
 import TextArea from '../shared/TextArea';
@@ -10,6 +10,7 @@ import FullWidthButton from '../shared/FullWidthButton';
 import TaskService from '../../services/tasks';
 import ContentContainer from '../shared/ContentContainer';
 import navigateBack from '../../utils/navigateBack';
+import Subtask from '../../models/Subtask';
 
 const ActionsContainer = styled.div`
   height: auto;
@@ -46,145 +47,92 @@ const SectionHeader = styled.h4`
   color: rgba(91, 91, 91, 1);
 `;
 
-const propTypes = {
-  history: PropTypes.shape(History).isRequired,
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      id: PropTypes.string,
-      subtaskId: PropTypes.string,
-    }),
-  }).isRequired,
-};
+const SubtaskDetails = () => {
+  const { id: taskId, subtaskId } = useParams();
+  const taskService = new TaskService();
+  const [subtask, setSubtask] = useState(new Subtask());
+  const history = useHistory();
 
-class SubtaskDetails extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: '',
-      notes: '',
-      completed: false,
-      timeSpent: 0,
-    };
-    this.taskService = new TaskService();
-  }
+  useEffect(() => {
+    if (JSON.stringify(subtask) === JSON.stringify(new Subtask())) {
+      const getSubtask = async () => {
+        const subtaskRes = await taskService.getSubtask(taskId, subtaskId);
+        setSubtask({ ...subtaskRes });
+      };
 
-  componentDidMount() {
-    this.getSubtask();
-  }
+      getSubtask();
+    }
+  }, [subtask]);
 
-  componentWillUnmount() {
-    const { ...subtask } = this.state;
-    this.updateSubtask(subtask).catch(() => new Error('task does not exist'));
-  }
-
-  updateTimeSpentHandler = time => {
-    this.setState(() => ({ timeSpent: time }));
+  const updateSubtask = async (updates = {}) => {
+    return taskService
+      .updateSubtask(taskId, subtaskId, { ...updates, ...subtask })
+      .catch(() => new Error('task does not exist'));
   };
 
-  watchTimerStopHandler = () => {
-    const { ...subtask } = this.state;
-    this.updateSubtask(subtask);
+  const updateTimeSpentHandler = timeSpent => {
+    setSubtask(prevSubtask => ({ ...prevSubtask, timeSpent }));
   };
 
-  getSubtask = () => {
-    const {
-      match: {
-        params: { id: taskId, subtaskId },
-      },
-    } = this.props;
-
-    this.taskService
-      .getSubtask(taskId, subtaskId)
-      .then(subtask => this.setState(() => ({ ...subtask })));
-  };
-
-  updateAndGetSubtask = updates => {
-    this.updateSubtask(updates).then(() => this.getSubtask());
-  };
-
-  updateSubtask = updates => {
-    const {
-      match: {
-        params: { id: taskId, subtaskId },
-      },
-    } = this.props;
-    return this.taskService.updateSubtask(taskId, subtaskId, updates);
-  };
-
-  onNameChangeHandler = e => {
+  const onNameChangeHandler = e => {
     const name = e.target.value;
-    this.setState(() => ({ name }));
+    setSubtask(prevSubtask => ({ ...prevSubtask, name }));
   };
 
-  onMouseLeaveHandler = () => {
-    const { ...subtask } = this.state;
-    return this.updateSubtask(subtask).catch(
-      () => new Error('task does not exist')
-    );
-  };
-
-  onNotesChange = e => {
+  const onNotesChange = e => {
     const notes = e.target.value;
-    this.setState(() => ({ notes }));
+    setSubtask(prevSubtask => ({ ...prevSubtask, notes }));
   };
 
-  deleteSubtask = () => {
-    const {
-      match: {
-        params: { id: taskId, subtaskId },
-      },
-      history,
-    } = this.props;
-    return this.taskService
+  const deleteSubtask = () => {
+    return taskService
       .deleteSubtask(taskId, subtaskId)
       .then(() => navigateBack(history));
   };
 
-  render() {
-    const { timeSpent, name, notes, completed } = this.state;
+  const { timeSpent, name, notes, completed } = subtask;
 
-    return (
-      <ContentContainer>
-        <TaskNameInput
-          name={name}
-          onNameChangeHandler={this.onNameChangeHandler}
-          onMouseLeaveHandler={this.onMouseLeaveHandler}
-        />
-        <SectionHeader>actions</SectionHeader>
-        <ActionsContainer>
-          <ItemContainer>
-            <small>Time Spent</small>
-            <Timer
-              time={timeSpent}
-              updateTimeSpentHandler={this.updateTimeSpentHandler}
-              watchTimerStopHandler={this.watchTimerStopHandler}
+  return (
+    <ContentContainer onMouseLeave={() => updateSubtask()}>
+      <TaskNameInput
+        name={name}
+        onNameChangeHandler={onNameChangeHandler}
+        onMouseLeaveHandler={() => updateSubtask()}
+      />
+      <SectionHeader>actions</SectionHeader>
+      <ActionsContainer>
+        <ItemContainer>
+          <small>Time Spent</small>
+          <Timer
+            timeSpent={timeSpent}
+            updateTimeSpentHandler={updateTimeSpentHandler}
+            watchTimerStopHandler={updateSubtask}
+          />
+        </ItemContainer>
+        <ItemContainer>
+          <>
+            <small>Subtask is Complete?</small>
+            <Switch
+              onChange={() =>
+                setSubtask(prev => ({ ...prev, completed: !completed }))
+              }
+              checked={completed}
             />
-          </ItemContainer>
-          <ItemContainer>
-            <>
-              <small>Subtask is Complete?</small>
-              <Switch
-                onChange={() =>
-                  this.updateAndGetSubtask({
-                    ...this.state,
-                    completed: !completed,
-                  })
-                }
-                checked={completed}
-              />
-            </>
-          </ItemContainer>
-        </ActionsContainer>
-        <SectionHeader>notes</SectionHeader>
-        <TextArea value={notes} onChange={this.onNotesChange} />
-        <FullWidthButton color="red" onClick={() => this.deleteSubtask()}>
-          Delete Task
-        </FullWidthButton>
-      </ContentContainer>
-    );
-  }
-}
-
-SubtaskDetails.propTypes = propTypes;
+          </>
+        </ItemContainer>
+      </ActionsContainer>
+      <SectionHeader>notes</SectionHeader>
+      <TextArea
+        aria-label="notes"
+        value={notes}
+        onChange={onNotesChange}
+        onMouseLeave={() => updateSubtask()}
+      />
+      <FullWidthButton color="red" onClick={deleteSubtask}>
+        Delete Task
+      </FullWidthButton>
+    </ContentContainer>
+  );
+};
 
 export default SubtaskDetails;

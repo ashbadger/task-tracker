@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
+import { useHistory, useParams } from 'react-router-dom';
 
 import TaskOverview from '../shared/TaskOverview';
 import TaskService from '../../services/tasks';
-import Task from '../shared/Task';
+import TaskComponent from '../shared/Task';
 import TextArea from '../shared/TextArea';
 import TaskNameInput from '../shared/TaskNameInput';
 import Button from '../shared/Button';
@@ -13,6 +13,7 @@ import getSubtasksAggs from '../../utils/getSubtasksAggs';
 import SectionHeader from '../shared/SectionHeader';
 import ContentContainer from '../shared/ContentContainer';
 import navigateBack from '../../utils/navigateBack';
+import Task from '../../models/Task';
 
 const SectionHeaderContainer = styled.div`
   display: flex;
@@ -20,146 +21,101 @@ const SectionHeaderContainer = styled.div`
   align-items: center;
 `;
 
-const propTypes = {
-  history: PropTypes.shape(History).isRequired,
-  match: PropTypes.shape({ params: PropTypes.shape({ id: PropTypes.string }) })
-    .isRequired,
-};
+const TaskDetails = () => {
+  const taskService = new TaskService();
+  const [task, setTask] = useState(new Task());
+  const history = useHistory();
+  const { id } = useParams();
+  let initialState = true;
 
-class TaskDetails extends React.Component {
-  constructor(props) {
-    super(props);
-    const {
-      match: {
-        params: { id },
-      },
-    } = this.props;
-    this.state = {
-      id,
-      name: '',
-      subtasks: [],
-      notes: '',
-      percentageCompletedAgg: 0,
-      timeSpentAgg: 0,
-    };
-
-    this.taskService = new TaskService();
-  }
-
-  componentDidMount() {
-    const { id } = this.state;
-    this.taskService.getTask(id).then(task => {
-      const aggregates = getSubtasksAggs(task.subtasks);
-      this.setState({ ...task, ...aggregates });
-    });
-  }
-
-  async componentWillUnmount() {
-    this.saveTask();
-  }
-
-  openSubtask = subtaskId => {
-    const { history } = this.props;
-    const { id } = this.state;
-
-    history.push(`/tasks/${id}/${subtaskId}`);
-  };
-
-  saveTask = () => {
-    const { id, ...subtask } = this.state;
-    this.taskService
-      .updateTask(id, subtask)
+  const saveTask = async () => {
+    return taskService
+      .updateTask(id, { ...task })
       .catch(() => new Error('task does not exist'));
   };
 
-  createSubtask = async subtask => {
-    const { id } = this.state;
-    const subtaskDocument = await this.taskService.createSubtask(id, subtask);
-    this.setState(prevState => {
-      const { subtasks } = prevState;
-      return { subtasks: [...subtasks, subtaskDocument] };
-    });
+  const getTask = async () => {
+    const taskRes = await taskService.getTask(id);
+    const aggregates = getSubtasksAggs(taskRes.subtasks);
+    setTask({ ...taskRes, ...aggregates });
   };
 
-  deleteTask = () => {
-    const { id } = this.state;
-    const { history } = this.props;
+  useEffect(() => {
+    if (initialState) {
+      getTask();
+      initialState = false;
+    }
+  }, []);
 
-    this.taskService.deleteTask(id).then(() => navigateBack(history));
+  const openSubtask = subtaskId => {
+    history.push(`/tasks/${id}/${subtaskId}`);
   };
 
-  onNameChangeHandler = e => {
+  const deleteTask = () => {
+    taskService.deleteTask(id).then(() => navigateBack(history));
+  };
+
+  const onNameChangeHandler = e => {
     const name = e.target.value;
-    this.setState(() => ({ name }));
+    setTask(prevTask => ({ ...prevTask, name }));
   };
 
-  onMouseLeaveHandler = async () => {
-    this.saveTask();
-  };
-
-  onNotesChange = e => {
+  const onNotesChange = e => {
     const notes = e.target.value;
-    this.setState(() => ({ notes }));
+    setTask(prevTask => ({ ...prevTask, notes }));
   };
 
-  render() {
-    const {
-      id,
-      name,
-      subtasks,
-      notes,
-      percentageCompletedAgg,
-      timeSpentAgg,
-    } = this.state;
-    const { history } = this.props;
+  const { name, subtasks, notes, percentageCompletedAgg, timeSpentAgg } = task;
 
-    return (
-      <ContentContainer>
-        <TaskNameInput
-          name={name}
-          onNameChangeHandler={this.onNameChangeHandler}
-          onMouseLeaveHandler={this.onMouseLeaveHandler}
-        />
-        <SectionHeader>overview</SectionHeader>
-        <TaskOverview
-          timeSpent={timeSpentAgg}
-          percentageCompleted={percentageCompletedAgg}
-        />
-        <SectionHeaderContainer>
-          <SectionHeader>subtasks</SectionHeader>
-          <Button
-            color="default"
-            onClick={() => history.push(`/tasks/${id}/create`)}
-          >
-            Create New Subtask
-          </Button>
-        </SectionHeaderContainer>
-        {subtasks.map((subtask, index) => (
-          <div
-            onClick={() => this.openSubtask(subtask.id)}
-            onKeyDown={() => this.openSubtask(subtask.id)}
-            role="button"
-            tabIndex={0}
-            key={index}
-          >
-            <Task
-              name={subtask.name}
-              completed={subtask.completed}
-              timeSpent={subtask.timeSpent}
-              isSubtask
-            />
-          </div>
-        ))}
-        <SectionHeader>notes</SectionHeader>
-        <TextArea value={notes} onChange={this.onNotesChange} />
-        <FullWidthButton color="red" onClick={() => this.deleteTask()}>
-          Delete Task
-        </FullWidthButton>
-      </ContentContainer>
-    );
-  }
-}
-
-TaskDetails.propTypes = propTypes;
+  return (
+    <ContentContainer onMouseLeave={saveTask}>
+      <TaskNameInput
+        name={name}
+        onMouseLeaveHandler={saveTask}
+        onNameChangeHandler={onNameChangeHandler}
+      />
+      <SectionHeader>overview</SectionHeader>
+      <TaskOverview
+        timeSpent={timeSpentAgg}
+        percentageCompleted={percentageCompletedAgg}
+      />
+      <SectionHeaderContainer>
+        <SectionHeader>subtasks</SectionHeader>
+        <Button
+          color="default"
+          onClick={() => history.push(`/tasks/${id}/create`)}
+        >
+          Create New Subtask
+        </Button>
+      </SectionHeaderContainer>
+      {subtasks.map(subtask => (
+        <div
+          onClick={() => openSubtask(subtask.id)}
+          onKeyDown={() => openSubtask(subtask.id)}
+          role="button"
+          tabIndex={0}
+          key={subtask.id}
+        >
+          <TaskComponent
+            name={subtask.name}
+            completed={subtask.completed}
+            timeSpent={subtask.timeSpent}
+            isSubtask
+          />
+        </div>
+      ))}
+      <SectionHeader>notes</SectionHeader>
+      <TextArea
+        aria-label="notes"
+        value={notes}
+        onChange={onNotesChange}
+        onMouseLeave={saveTask}
+      />
+      <FullWidthButton color="red" onClick={() => deleteTask()}>
+        Delete Task
+      </FullWidthButton>
+    </ContentContainer>
+  );
+};
 
 export default TaskDetails;

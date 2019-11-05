@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
@@ -6,6 +6,7 @@ import TaskNameInput from './TaskNameInput';
 import TextArea from './TextArea';
 import SectionHeader from './SectionHeader';
 import FullWidthButton from './FullWidthButton';
+import Task from '../../models/Task';
 
 const Container = styled.div`
   margin: 1rem 0;
@@ -21,54 +22,42 @@ const propTypes = {
   saveHandler: PropTypes.func.isRequired,
 };
 
-class TaskCreate extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: '',
-      notes: '',
-    };
-  }
+const TaskCreate = props => {
+  const [task, setTask] = useState(new Task());
 
-  onNameChangeHandler = e => {
+  const onNameChangeHandler = e => {
     const name = e.target.value;
-    this.setState(() => ({ name }));
+    setTask(() => ({ ...task, name }));
   };
 
-  onNotesChange = e => {
+  const onNotesChange = e => {
     const notes = e.target.value;
-    this.setState(() => ({ notes }));
+    setTask(() => ({ ...task, notes }));
   };
 
-  render() {
-    const { name, notes } = this.state;
-    const { saveHandler } = this.props;
+  const { name, notes } = task;
+  const { saveHandler } = props;
 
-    return (
-      <div>
-        <TaskNameInput
-          name={name}
-          aria-label="name"
-          onNameChangeHandler={this.onNameChangeHandler}
-        />
-        <SectionHeader>notes</SectionHeader>
-        <TextArea
-          aria-label="notes"
-          value={notes}
-          onChange={this.onNotesChange}
-        />
-        <Container>
-          <FullWidthButton
-            color="default"
-            onClick={() => saveHandler({ name, notes })}
-          >
-            Create Task
-          </FullWidthButton>
-        </Container>
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      <TaskNameInput
+        name={name}
+        aria-label="name"
+        onNameChangeHandler={onNameChangeHandler}
+      />
+      <SectionHeader>notes</SectionHeader>
+      <TextArea aria-label="notes" value={notes} onChange={onNotesChange} />
+      <Container>
+        <FullWidthButton
+          color="default"
+          onClick={() => saveHandler({ name, notes })}
+        >
+          Create Task
+        </FullWidthButton>
+      </Container>
+    </div>
+  );
+};
 
 TaskCreate.propTypes = propTypes;
 

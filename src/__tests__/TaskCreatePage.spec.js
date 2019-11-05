@@ -7,23 +7,24 @@ import {
   fireEvent,
 } from '@testing-library/react';
 
-import TaskCreatePage from '../components/task/TaskCreatePage';
 import AppRouter from '../routers/AppRouter';
 
 jest.mock('../services/tasks');
 
+let history;
+
+beforeEach(() => {
+  /* reset global history object */
+  history = createBrowserHistory();
+  history.push('/tasks/create');
+});
+
 afterEach(() => {
   cleanup();
-  /* fetch global history object
-   * navigate back to home page */
-  const history = createBrowserHistory();
-  history.push('/');
 });
 
 it('should update name on input', async () => {
-  const { getByLabelText } = render(
-    <TaskCreatePage history={createBrowserHistory()} />
-  );
+  const { getByLabelText } = render(<AppRouter />);
 
   const taskName = 'A new task name';
 
@@ -34,9 +35,7 @@ it('should update name on input', async () => {
 });
 
 it('should update notes on input', async () => {
-  const { getByLabelText } = render(
-    <TaskCreatePage history={createBrowserHistory()} />
-  );
+  const { getByLabelText } = render(<AppRouter />);
   const taskNotes = 'Some notes for a task';
 
   const notesInputNode = await waitForElement(() => getByLabelText('notes'));
@@ -46,11 +45,7 @@ it('should update notes on input', async () => {
 });
 
 it('should create task on button click and navigate to task details page', async () => {
-  /* route to task detail page */
-  const history = createBrowserHistory();
-  history.push('/tasks/create');
-
-  const { getByText, getByLabelText } = render(<AppRouter history={history} />);
+  const { getByText, getByLabelText } = render(<AppRouter />);
 
   const taskName = 'A new task name';
 

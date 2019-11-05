@@ -1,31 +1,20 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 
 import TaskCreate from '../shared/TaskCreate';
 import TaskService from '../../services/tasks';
 
-const propTypes = {
-  history: PropTypes.shape(History).isRequired,
-};
+const TaskCreatePage = () => {
+  const taskService = new TaskService();
+  const history = useHistory();
 
-class TaskCreatePage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.taskService = new TaskService();
-  }
-
-  saveTaskHandler = task => {
-    this.taskService.createTask(task).then(res => {
-      const { history } = this.props;
+  const saveTaskHandler = async task => {
+    return taskService.createTask(task).then(res => {
       history.push(`/tasks/${res.id}`);
     });
   };
 
-  render() {
-    return <TaskCreate saveHandler={this.saveTaskHandler} />;
-  }
-}
-
-TaskCreatePage.propTypes = propTypes;
+  return <TaskCreate saveHandler={saveTaskHandler} />;
+};
 
 export default TaskCreatePage;

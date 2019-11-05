@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node server/server.js",
     "dev-server": "webpack-dev-server",
-    "test": "jest --watchAll",
+    "test": "jest",
+    "test:watch": "jest --watchAll",
     "build:dev": "webpack --mode development",
     "build:prod": "webpack --mode production",
     "heroku-postbuild": "npm run build:prod"

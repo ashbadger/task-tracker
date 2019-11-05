@@ -24,4 +24,10 @@ export default class TaskService {
   getTasks = async => {
     return Promise.resolve([...tasks]);
   };
+
+  getSubtask = async (taskId, subtaskId) => {
+    const task = tasks.find(t => t.id === taskId);
+    const subtask = task.subtasks.find(s => s.id === subtaskId);
+    return Promise.resolve(subtask);
+  };
 }

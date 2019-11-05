@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import prettyMS from 'pretty-ms';
 import PropTypes from 'prop-types';
@@ -7,70 +7,62 @@ import Button from './Button';
 
 const TimerBox = styled.p`
   border: ${props =>
-    `solid ${props.started ? '2px' : '1px'} rgb(195, 195, 195);`};
+    `solid ${props.isActive ? '2px' : '1px'} rgb(195, 195, 195);`};
   border-radius: 5px;
   padding: 6px;
   width: 150px;
 `;
 
 const propTypes = {
-  time: PropTypes.number,
+  timeSpent: PropTypes.number,
   updateTimeSpentHandler: PropTypes.func.isRequired,
   watchTimerStopHandler: PropTypes.func.isRequired,
 };
 
 const defaultProps = {
-  time: 0,
+  timeSpent: 0,
 };
 
-class Timer extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      started: false,
-    };
-  }
+const Timer = props => {
+  const { updateTimeSpentHandler, watchTimerStopHandler, timeSpent } = props;
+  const [isActive, setIsActive] = useState(false);
+  const [timeInterval, setTimeInterval] = useState();
+  const timeSpentRef = useRef(timeSpent);
+  timeSpentRef.current = timeSpent;
 
-  incrementTimeBySecond = () => {
-    const { updateTimeSpentHandler } = this.props;
+  const incrementTimeBySecond = () => {
+    setIsActive(true);
 
-    this.setState(() => ({ started: true }));
-
-    this.interval = setInterval(() => {
-      const { time } = this.props;
-      updateTimeSpentHandler(time + 1000);
-    }, 1000);
+    setTimeInterval(
+      setInterval(() => {
+        updateTimeSpentHandler(timeSpentRef.current + 1000);
+      }, 1000)
+    );
   };
 
-  stopTimeIncrement = () => {
-    const { watchTimerStopHandler } = this.props;
-
-    clearInterval(this.interval);
-    this.setState(() => ({ started: false }));
-
+  const stopTimeIncrement = () => {
+    clearInterval(timeInterval);
+    setIsActive(false);
     watchTimerStopHandler();
   };
 
-  render() {
-    const { started } = this.state;
-    const { time } = this.props;
-
-    return (
-      <div>
-        <TimerBox started={started}>{prettyMS(time)}</TimerBox>
-        {started ? (
-          <Button color="red" onClick={this.stopTimeIncrement}>
-            stop
-          </Button>
-        ) : (
-          <Button color="blue" onClick={this.incrementTimeBySecond}>
-            start
-          </Button>
-        )}
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      <TimerBox aria-label="time spent" isActive={isActive}>
+        {prettyMS(timeSpent)}
+      </TimerBox>
+      {isActive ? (
+        <Button color="red" onClick={stopTimeIncrement}>
+          stop
+        </Button>
+      ) : (
+        <Button color="blue" onClick={incrementTimeBySecond}>
+          start
+        </Button>
+      )}
+    </div>
+  );
+};
 
 Timer.propTypes = propTypes;
 Timer.defaultProps = defaultProps;
