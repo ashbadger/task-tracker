@@ -1,0 +1,21 @@
+name: Deploy on Push to Master
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+
+    - name: deploy to heroku
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      if: job.status == 'success'
+      run: git push -f https://heroku:$HEROKU_API_KEY@git.heroku.com/task-tracker-react.git origin/master:master

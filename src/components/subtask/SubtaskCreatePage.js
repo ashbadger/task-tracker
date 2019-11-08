@@ -11,7 +11,6 @@ const SubtaskCreatePage = () => {
   const history = useHistory();
 
   const saveSubtaskHandler = subtask => {
-    console.log(new Subtask(subtask));
     taskService.createSubtask(taskId, { ...new Subtask(subtask) }).then(res => {
       history.push(`/tasks/${taskId}/${res.id}`);
     });
