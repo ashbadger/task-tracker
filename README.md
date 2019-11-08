@@ -1,3 +1,5 @@
+![](https://github.com/ashbadger/task-tracker/workflows/Build%20and%20Test%20on%20Push/badge.svg)
+
 # task tracker
 
 <img src="https://github.com/ashbadger/task-tracker/blob/master/public/images/logo_dark.png?raw=true" height="150"> 
